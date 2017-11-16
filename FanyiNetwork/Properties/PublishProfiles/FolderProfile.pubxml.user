@@ -7,5 +7,6 @@
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_NewBackgroundProfile>True</_NewBackgroundProfile>
+    <_PublishTargetUrl>bin\Release\PublishOutput</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

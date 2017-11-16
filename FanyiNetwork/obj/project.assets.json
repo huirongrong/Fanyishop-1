@@ -11115,11 +11115,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "E:\\FanyiNetwork\\FanyiNetwork\\FanyiNetwork.csproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\Fanyishop\\FanyiNetwork\\FanyiNetwork.csproj",
       "projectName": "FanyiNetwork",
-      "projectPath": "E:\\FanyiNetwork\\FanyiNetwork\\FanyiNetwork.csproj",
+      "projectPath": "C:\\Users\\Administrator\\Fanyishop\\FanyiNetwork\\FanyiNetwork.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "E:\\FanyiNetwork\\FanyiNetwork\\obj\\",
+      "outputPath": "C:\\Users\\Administrator\\Fanyishop\\FanyiNetwork\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
