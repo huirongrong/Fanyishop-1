@@ -1,0 +1,320 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section styles{
+    <style type="text/css">
+        .ivu-card {
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .overdue {
+            color: red;
+            font-weight: bold;
+        }
+
+        .cardLink:link, .cardLink:visited, .cardLink:hover, .cardLink:active {
+            color: #000000;
+            display:block;
+        }
+    </style>
+}
+
+<i-menu mode="horizontal" active-name="1">
+    <div class="layout-assistant">
+
+        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编" || x.Value == "客服主管" || x.Value == "客服部" || x.Value == "经理办" || x.Value == "人事部")))
+        {
+            <Menu-item name="1" @@click.native="All()">全部</Menu-item>
+            <Menu-item name="2" @@click.native="status='待派单'">待派单<Badge dot v-if="notification_dpd">&nbsp;</Badge></Menu-item>
+            <Menu-item name="3" @@click.native="status='待交稿'">待交稿<Badge dot v-if="notification_djg">&nbsp;</Badge></Menu-item>
+            <Menu-item name="4" @@click.native="status='待修改'">待修改<Badge dot v-if="notification_dxg">&nbsp;</Badge></Menu-item>
+            <Menu-item name="5" @@click.native="status='待审核'">待审核<Badge dot v-if="notification_dsh">&nbsp;</Badge></Menu-item>
+            <Menu-item name="6" @@click.native="status='待发送'">待发送<Badge dot v-if="notification_dfs">&nbsp;</Badge></Menu-item>
+        }
+        else
+        {
+            <Menu-item name="1" @@click.native="All()">全部</Menu-item>
+            <Menu-item name="2" @@click.native="status='待交稿'">待交稿<Badge dot v-if="notification_djg">&nbsp;</Badge></Menu-item>
+            <Menu-item name="3" @@click.native="status='待修改'">待修改<Badge dot v-if="notification_dxg">&nbsp;</Badge></Menu-item>
+            <Menu-item name="4" @@click.native="status='待审核'">待审核<Badge dot v-if="notification_dsh">&nbsp;</Badge></Menu-item>
+            <Menu-item name="5" @@click.native="status='待发送'">已完成<Badge dot v-if="notification_dfs">&nbsp;</Badge></Menu-item>
+        }
+
+    </div>
+</i-menu>
+
+<div class="layout-content">
+
+    <div class="container">
+        <i-input v-model="searchText" placeholder="请输入需要查询的单号..." @@on-enter="redirect"></i-input>
+    </div>
+
+    <div class="container">
+        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编" || x.Value == "客服主管" || x.Value == "经理办")))
+        {
+            <span><i-switch v-model="onlyme" @@on-change="fetchData"></i-switch> 只显示与我有关</span>
+        }
+        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "客服主管" || x.Value == "经理办" || x.Value == "人事部")))
+        {
+            <span style="margin-left:12px;"><i-switch v-model="onlyparttime" @@on-change="fetchData"></i-switch> 只显示兼职</span>
+        }
+
+        <span style="float:right;">
+            
+            @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编" || x.Value == "客服部" || x.Value == "客服主管" || x.Value == "经理办" || x.Value == "人事部")))
+            {
+                <span>人员筛选：</span>
+                <i-select v-model="editor" style="width:100px" placeholder="请选择编辑" @@on-change="fetchData">
+                    <i-option :value="0" :key="0">所有编辑</i-option>
+                    <i-option v-for="item in editors" :value="item.id" :key="item.id">{{ item.name }}</i-option>
+                </i-select>
+            }
+            @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "客服主管" || x.Value == "经理办" || x.Value == "人事部")))
+            {
+                <i-select v-model="parttime_editor" style="width:125px" placeholder="请选择兼职编辑" @@on-change="fetchData">
+                    <i-option :value="0" :key="0">所有兼职编辑</i-option>
+                    <i-option v-for="item in parttime_editors" :value="item.id" :key="item.id">{{ item.name }}</i-option>
+                </i-select>
+                <i-select v-model="cs" style="width:100px" placeholder="请选择客服" @@on-change="fetchData">
+                    <i-option :value="0" :key="0">所有客服</i-option>
+                    <i-option v-for="item in css" :value="item.id" :key="item.id">{{ item.name }}</i-option>
+                </i-select>
+            }
+        </span>
+    </div>
+        <div class="container" style="max-width:960px">
+            <Row :gutter="8">
+                <i-col :xs="24" :sm="24" :md="8" :lg="8" v-for="assignment in filter(assignments)">
+                    <a class="cardLink" :href="'/home/assignment/' + assignment.assignmentDetails.no">
+                        <Badge :count="assignment.notification" overflow-count="9" style="display:block;">
+                           
+                        <Card :bordered="true">
+
+                            <p slot="title">
+
+                                <Tag v-if="assignment.assignmentDetails.isClass" color="blue">网课</Tag>
+                                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value != "兼职编辑部")))
+                                {
+                                    <Tag v-if="assignment.assignmentDetails.isParttime" color="yellow">兼职</Tag>
+                                }
+                                {{ assignment.assignmentDetails.no }}
+
+                            </p>
+                            <p slot="extra">
+
+                                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编")))
+                                {
+                                    <Icon type="ios-clock"></Icon> <span v-bind:class="{ overdue: moment(assignment.assignmentDetails.reviewDue).isBefore(moment())}">{{ fromNow(assignment.assignmentDetails.reviewDue) }}</span>
+                                }
+                                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "编辑部" || x.Value == "兼职编辑部")))
+                                {
+                                    <Icon type="ios-clock"></Icon> <span v-bind:class="{ overdue: moment(assignment.assignmentDetails.finishDue).isBefore(moment())}">{{ fromNow(assignment.assignmentDetails.finishDue) }}</span>
+                                }
+                                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "客服主管" || x.Value == "客服部" || x.Value == "经理办" || x.Value == "人事部")))
+                                {
+                                    <Icon type="ios-clock"></Icon> <span v-bind:class="{ overdue: moment(assignment.assignmentDetails.due).isBefore(moment())}">{{ fromNow(assignment.assignmentDetails.due) }}</span>
+                                }
+                            </p>
+                            <p>当前状态：{{ assignment.assignmentDetails.status }}</p>
+                            <p style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" :title="CheckEmpty(assignment.assignmentDetails.topic)">单号主题：{{ CheckEmpty(assignment.assignmentDetails.topic) }}</p>
+                            <p>字数要求：{{ assignment.assignmentDetails.wordCount }}字 <span v-if="assignment.pageCount != 0">/ {{ assignment.assignmentDetails.pageCount }}页</span></p>
+
+                            @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编")))
+                            {
+                                <p>审核时间：{{ formatTime(assignment.assignmentDetails.reviewDue) }}</p>
+                            }
+                            @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "编辑部")))
+                            {
+                                <p>交稿时间：{{ formatTime(assignment.assignmentDetails.finishDue) }}</p>
+                            }
+                            <p>负责客服：{{ DisplayName(assignment.cs) }} 负责编辑：{{ DisplayName(assignment.editor) }}</p>
+                            <p>截止时间：{{ formatTime(assignment.assignmentDetails.due) }}</p>
+
+                        </Card>
+
+                            </Badge>
+                    </a>
+                </i-col>
+            </Row>
+        </div>
+
+    </div>
+@section scripts{
+    <script>
+
+        moment.locale("zh-cn");
+
+        new Vue({
+            el: '#app',
+            data: {
+                status: '',
+                searchText: '',
+                onlyme: false,
+                onlyparttime: false,
+                editor: 0,
+                editors: [],
+                parttime_editor: 0,
+                parttime_editors: [],
+                cs: 0,
+                css:[],
+                notifications: [],
+                notification_dpd: false,
+                notification_djg: false,
+                notification_dxg: false,
+                notification_dsh: false,
+                notification_dfs: false,
+                assignments: [],
+                overdue: {
+                    color: 'inherit'
+                }
+            },
+            created: function () {
+                this.fetchData();
+                this.fetchPeople();
+
+                var _this = this;
+
+                setInterval(function () {
+                    _this.fetchData();
+                }, 3200);
+            },
+            methods: {
+                redirect: function () {
+                    window.location.href = "/home/assignment/" + this.searchText;
+                },
+                All: function () {
+                    this.status = '';
+                    this.searchText = '';
+                },
+                fetchPeople: function () { 
+
+                    var _this = this;
+
+                    axios.get("/api/user/group/全部编辑").then(function (response) {
+                        _this.editors = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+
+                    axios.get("/api/user/group/全部客服").then(function (response) {
+                        _this.css = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                    
+                    axios.get("/api/user/group/兼职编辑部").then(function (response) {
+                        _this.parttime_editors = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                fetchData: function () {
+                    var _this = this;
+                    
+                    axios.get("/api/assignment", {
+                        params: {
+                            onlyme: _this.onlyme,
+                            onlyparttime: _this.onlyparttime,
+                            editor: _this.editor,
+                            parttimeEditor: _this.parttime_editor,
+                            cs: _this.cs
+                        }
+                    }).then(function (response) {
+                        axios.get("/api/notification").then(function (noti_response) {
+                            _this.notifications = noti_response.data;
+                            _this.assignments = response.data;
+
+                            for (var j = 0; j < _this.assignments.length; j++) {
+                                if (!_this.assignments[j].assignmentDetails.notification) {
+                                    for (var i = 0; i < _this.notifications.length; i++) {
+                                        if (_this.assignments[j].assignmentDetails.id == _this.notifications[i].assignmentid) {
+
+                                            switch (_this.assignments[j].assignmentDetails.status)
+                                            { 
+                                                case "待派单":
+                                                    _this.notification_dpd = true;
+                                                    break;
+                                                case "待交稿":
+                                                    _this.notification_djg = true;
+                                                    break;
+                                                case "待修改":
+                                                    _this.notification_dxg = true;
+                                                    break;
+                                                case "待审核":
+                                                    _this.notification_dsh = true;
+                                                    break;
+                                                case "待发送":
+                                                    _this.notification_dfs = true;
+                                                    break;
+                                            }
+
+                                            if (_this.assignments[j].notification == null) {
+                                                _this.assignments[j].notification = 1;
+                                            }
+                                            else {
+                                                _this.assignments[j].notification += 1;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        });
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                filter: function (list) {
+
+                    var _this = this;
+
+                    if (this.status != '') {
+                        list = list.filter(function (item) {
+                            return item.assignmentDetails.status == _this.status;
+                        });
+                    }
+
+                    if (this.searchText != '') {
+                        list = list.filter(function (item) {
+                            return item.assignmentDetails.no.indexOf(_this.searchText) >= 0 || (item.assignmentDetails.topic != null && item.assignmentDetails.topic.toLowerCase().indexOf(_this.searchText.toLowerCase()) >= 0);
+                        });
+                    }
+
+                    return list;
+                },
+                formatTime: function (val) {
+                    return moment(val).format('lll');
+                },
+                fromNow: function (val) {
+                    return moment(val).fromNow();
+                },
+                dueStatus: function (record) {
+                    if (moment(record.due).isBefore(moment())) {
+                        overdue.color = "red";
+                    }
+                },
+                DisplayName: function (record) {
+                    if (record != null) {
+                        return record.name;
+                    }
+                    else {
+                        return "未分配";
+                    }
+                },
+                CheckEmpty: function (topic) {
+                    if (topic != null && topic != "") {
+                        return topic;
+                    }
+                    else {
+                        return "无";
+                    }
+                }
+            }
+        })
+
+
+    </script>
+}

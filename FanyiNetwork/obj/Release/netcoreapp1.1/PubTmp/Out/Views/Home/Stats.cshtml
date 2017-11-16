@@ -1,0 +1,265 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section styles{
+    <style type="text/css">
+        th {
+            text-align:center;
+        }
+        .Success {
+            color: #19be6b;
+        }
+        .Warning {
+            color: #ff9900;
+        }
+        .Error {
+            font-weight:bold;
+            color: #ed3f14;
+        }
+    </style>
+}
+
+
+<div class="layout-content">
+    <div class="container">
+        <Row>
+            <i-col style="text-align:center;">
+                <i-select v-model="year" style="width:100px" placeholder="请选择年" @@on-change="fetchData">
+                    <i-option v-for="item in years" :value="item.value" :key="item">{{ item.label }}</i-option>
+                </i-select>
+                <i-select v-model="month" style="width:100px" placeholder="请选择月" @@on-change="fetchData">
+                    <i-option v-for="item in monthes" :value="item.value" :key="item">{{ item.label }}</i-option>
+                </i-select>
+            </i-col>
+        </Row>
+
+        <div class="assignment-title">主编
+            <i-switch style="float:right;" v-model="show_cheif"></i-switch>
+        </div>
+        <i-table :columns="cheif_column" :data="cheif_stats" v-if="show_cheif"></i-table>
+
+        <div class="assignment-title">编辑部</div>
+        <i-table :columns="editor_column" :data="stats"></i-table>
+    </div>
+</div>
+@section scripts{
+    <script>
+
+        moment.locale("zh-cn");
+
+        var currentYear = moment().year();
+        var currentMonth = moment().month() + 1;
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                show_cheif: false,
+                year: currentYear.toString(),
+                month: currentMonth.toString(),
+                years: [
+                    {
+                        value: '2017',
+                        label: '2017年'
+                    }
+                ],
+                monthes: [
+                    {
+                        value: '0',
+                        label: '全部'
+                    },
+                    {
+                        value: '1',
+                        label: '1月'
+                    },
+                    {
+                        value: '2',
+                        label: '2月'
+                    },
+                    {
+                        value: '3',
+                        label: '3月'
+                    },
+                    {
+                        value: '4',
+                        label: '4月'
+                    },
+                    {
+                        value: '5',
+                        label: '5月'
+                    },
+                    {
+                        value: '6',
+                        label: '6月'
+                    },
+                    {
+                        value: '7',
+                        label: '7月'
+                    },
+                    {
+                        value: '8',
+                        label: '8月'
+                    },
+                    {
+                        value: '9',
+                        label: '9月'
+                    },
+                    {
+                        value: '10',
+                        label: '10月'
+                    },
+                    {
+                        value: '11',
+                        label: '11月'
+                    },
+                    {
+                        value: '12',
+                        label: '12月'
+                    }
+                ],
+                stats: [],
+                cheif_stats: [],
+                cheif_column: [
+                    {
+                        title: '姓名',
+                        key: 'name',
+                        render: function (params) {
+                            return '<Icon type="person"></Icon> ' + params.name;
+                        }
+                    },
+                    {
+                        title: '总分配数',
+                        key: 'totalAssign'
+                    },
+                    {
+                        title: '派单超时次数',
+                        key: 'assignoverdue',
+                        render: function (row) {
+                            return row.assignoverdue + vm.conditionalDisplay(row.assignoverduePercentage);
+                        }
+                    },
+                    {
+                        title: '审核超时次数',
+                        key: 'reviewoverdue',
+                        render: function (row) {
+                            return row.reviewoverdue + vm.conditionalDisplay(row.reviewoverduePercentage);
+                        }
+                    }
+                ],
+                editor_column: [
+                    {
+                        title: '姓名',
+                        key: 'name',
+                        render: function (row) {
+                            return '<Icon type="person"></Icon> ' + row.name;
+                        } 
+                    },
+                    {
+                        title: '总单数',
+                        key: 'totalOrder',
+                        sortable: true
+                    },
+                    {
+                        title: '总字数',
+                        key: 'totalWord',
+                        sortable: true
+                    },
+                    {
+                        title: '效率',
+                        key: 'efficiency',
+                        render: function (row) { 
+                            return row.efficiency + "字每天";
+                        },
+                        sortable: true
+                    },
+                    {
+                        title: '超时次数',
+                        key: 'overdue',
+                        render: function (row) {
+                            return row.overdue + vm.conditionalDisplay(row.overduePercentage);
+                        },
+                        sortable: true
+                    },
+                    {
+                        title: '拖稿次数',
+                        key: 'late',
+                        render: function (row, h) {
+                            console.log(h)
+                            return row.late + vm.conditionalDisplay(row.latePercentage);
+                        },
+                        sortable: true
+                    },
+                    {
+                        title: '主编评分',
+                        key: 'review',
+                        sortable: true
+                    },
+                    {
+                        title: '用户评分',
+                        key: 'rating',
+                        sortable: true
+                    },
+                    {
+                        title: '操作',
+                        render: function (row)
+                        { 
+                            return '<i-button type="info" @@click="redirect(' + row.userid + ')">查看详情</i-button>';
+                        }
+                    }
+                ],
+            },
+            created: function () {
+                this.fetchData();
+            },
+            methods: {
+                fetchData: function () {
+                    var _this = this;
+
+                    axios.get("/api/user/GetEditorsStats", {
+                        params: {
+                            year: _this.year,
+                            month: _this.month
+                        }
+                    }).then(function (response) {
+                        _this.stats = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+
+                    axios.get("/api/user/GetCheifStats", {
+                        params: {
+                            year: _this.year,
+                            month: _this.month
+                        }
+                    }).then(function (response) {
+                        _this.cheif_stats = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                redirect: function (val) {
+                    window.location.href = "/home/assignmentList?userid=" + val;
+                },
+                conditionalDisplay: function (percentage)
+                {
+                    if (percentage <= 0)
+                    {
+                        return "<span class='Success'> (" + percentage + "%)<span>"
+                    }
+
+                    if (percentage >= 25) {
+                        return "<span class='Warning'> (" + percentage + "%)<span>"
+                    }
+
+                    if (percentage >= 50) {
+                        return "<span class='Error'> (" + percentage + "%)<span>"
+                    }
+
+                    return "<span> (" + percentage + "%)<span>"
+                }
+            }
+        })
+
+
+    </script>
+}

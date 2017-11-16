@@ -1,0 +1,282 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section styles{
+    <style type="text/css">
+        table {
+            width: 100%;
+            border: 1px solid #DDD;
+        }
+
+        th {
+            padding: 5px 0;
+            background-color: #F8F8F9;
+            border-bottom: 1px solid #DDD;
+        }
+
+        td {
+            padding: 5px 0;
+            background-color: #FFF;
+            text-align: center;
+        }
+
+        th, td {
+            width: 20%;
+        }
+    </style>
+}
+
+<div class="layout-content">
+
+    <div class="container">
+        <div class="assignment-title">编辑部</div>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>姓名</th>
+                <th>手机</th>
+                <th>QQ</th>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <th>操作</th>
+                }
+            </tr>
+            <tr v-for="item in this.editor">
+                <td>{{ item.name }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>
+                    {{ item.qq }}
+                    <a v-if="item.qq" target="_blank" :href="'http://wpa.qq.com/msgrd?v=3&uin=' + item.qq + '&site=qq&menu=yes'"><img style="vertical-align:middle;" border="0" :src="'http://wpa.qq.com/pa?p=2:'+item.qq+':51'" alt="点击这里给我发消息" title="点击这里给我发消息" /></a>
+                </td>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <td>
+                        <i-button v-show="item.status==true" @@click="ban(item)">封禁</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="approve(item)">审核通过</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="terminate(item)">离职</i-button>
+                    </td>
+                }
+            </tr>
+        </table>
+        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "客服主管" || x.Value == "人事部")))
+        {
+        <div class="assignment-title">兼职编辑部</div>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>姓名</th>
+                <th>手机</th>
+                <th>QQ</th>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <th>操作</th>
+                }
+            </tr>
+            <tr v-for="item in this.editor_parttime">
+                <td>{{ item.name }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>
+                    {{ item.qq }}
+                    <a v-if="item.qq" target="_blank" :href="'http://wpa.qq.com/msgrd?v=3&uin=' + item.qq + '&site=qq&menu=yes'"><img style="vertical-align:middle;" border="0" :src="'http://wpa.qq.com/pa?p=2:'+item.qq+':51'" alt="点击这里给我发消息" title="点击这里给我发消息" /></a>
+                </td>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <td>
+                        <i-button v-show="item.status==true" @@click="ban(item)">封禁</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="approve(item)">审核通过</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="terminate(item)">离职</i-button>
+                    </td>
+                }
+            </tr>
+        </table>
+        }
+
+        <div class="assignment-title">主编</div>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>姓名</th>
+                <th>手机</th>
+                <th>QQ</th>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <th>操作</th>
+                }
+            </tr>
+            <tr v-for="item in this.chiefeditor">
+                <td>{{ item.name }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>
+                    {{ item.qq }}
+                    <a v-if="item.qq" target="_blank" :href="'http://wpa.qq.com/msgrd?v=3&uin=' + item.qq + '&site=qq&menu=yes'"><img style="vertical-align:middle;" border="0" :src="'http://wpa.qq.com/pa?p=2:'+item.qq+':51'" alt="点击这里给我发消息" title="点击这里给我发消息" /></a>
+                </td>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <td>
+                        <i-button v-show="item.status==true" @@click="ban(item)">封禁</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="approve(item)">审核通过</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="terminate(item)">离职</i-button>
+                    </td>
+                }
+            </tr>
+        </table>
+
+        <div class="assignment-title">客服部</div>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>姓名</th>
+                <th>手机</th>
+                <th>QQ</th>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <th>操作</th>
+                }
+            </tr>
+            <tr v-for="item in this.cs">
+                <td>{{ item.name }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>
+                    {{ item.qq }}
+                    <a v-if="item.qq" target="_blank" :href="'http://wpa.qq.com/msgrd?v=3&uin=' + item.qq + '&site=qq&menu=yes'"><img style="vertical-align:middle;" border="0" :src="'http://wpa.qq.com/pa?p=2:'+item.qq+':51'" alt="点击这里给我发消息" title="点击这里给我发消息" /></a>
+                </td>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <td>
+                        <i-button v-show="item.status==true" @@click="ban(item)">封禁</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="approve(item)">审核通过</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="terminate(item)">离职</i-button>
+                    </td>
+                }
+            </tr>
+        </table>
+
+        <div class="assignment-title">经理办</div>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>姓名</th>
+                <th>手机</th>
+                <th>QQ</th>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <th>操作</th>
+                }
+            </tr>
+            <tr v-for="item in this.manager">
+                <td>{{ item.name }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>
+                    {{ item.qq }}
+                    <a v-if="item.qq" target="_blank" :href="'http://wpa.qq.com/msgrd?v=3&uin=' + item.qq + '&site=qq&menu=yes'"><img style="vertical-align:middle;" border="0" :src="'http://wpa.qq.com/pa?p=2:'+item.qq+':51'" alt="点击这里给我发消息" title="点击这里给我发消息" /></a>
+                </td>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <td>
+                        <i-button v-show="item.status==true" @@click="ban(item)">封禁</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="approve(item)">审核通过</i-button>
+                    </td>
+                }
+            </tr>
+        </table>
+
+        <div class="assignment-title">人事部</div>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>姓名</th>
+                <th>手机</th>
+                <th>QQ</th>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <th>操作</th>
+                }
+            </tr>
+            <tr v-for="item in this.hr">
+                <td>{{ item.name }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>
+                    {{ item.qq }}
+                    <a v-if="item.qq" target="_blank" :href="'http://wpa.qq.com/msgrd?v=3&uin=' + item.qq + '&site=qq&menu=yes'"><img style="vertical-align:middle;" border="0" :src="'http://wpa.qq.com/pa?p=2:'+item.qq+':51'" alt="点击这里给我发消息" title="点击这里给我发消息" /></a>
+                </td>
+                @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "经理办" || x.Value == "人事部")))
+                {
+                    <td>
+                        <i-button v-show="item.status==true" @@click="ban(item)">封禁</i-button>
+                        <i-button type="success" v-show="item.status==false" @@click="approve(item)">审核通过</i-button>
+                    </td>
+                }
+            </tr>
+        </table>
+    </div>
+
+</div>
+@section scripts{
+    <script>
+
+        moment.locale("zh-cn");
+
+        new Vue({
+            el: '#app',
+            data: {
+                editor: [],
+                editor_parttime:[],
+                chiefeditor: [],
+                cs: [],
+                manager: [],
+                hr: []
+
+            },
+            created: function () {
+                var vm = this;
+                axios.get("/api/user/group/编辑部").then(function (response) {
+                    vm.editor = response.data;
+                });
+                axios.get("/api/user/group/兼职编辑部").then(function (response) {
+                    vm.editor_parttime = response.data;
+                });
+                axios.get("/api/user/group/主编").then(function (response) {
+                    vm.chiefeditor = response.data;
+                });
+                axios.get("/api/user/group/客服部").then(function (response) {
+                    vm.cs = response.data;
+                });
+                axios.get("/api/user/group/经理办").then(function (response) {
+                    vm.manager = response.data;
+                });
+                axios.get("/api/user/group/人事部").then(function (response) {
+                    vm.hr = response.data;
+                });
+            },
+            methods: {
+                approve: function (user) {
+                    user.status = true;
+                    var vm = this;
+                    axios.put("/api/user", user).then(function (response) {
+                        vm.$Message.success('审核成功!');
+                    }).catch(function (error) {
+                        vm.$Message.error('审核失败!' + error);
+                    });
+                },
+                ban: function (user) {
+                    user.status = false;
+                    var vm = this;
+                    axios.put("/api/user", user).then(function (response) {
+                        vm.$Message.success('封禁成功!');
+                    }).catch(function (error) {
+                        vm.$Message.error('封禁失败!' + error);
+                    });
+                },
+                terminate: function (user) {
+
+                    if (confirm("确认标记该员工离职，并删除吗?")) {
+                        user.isTerminated = true;
+                        var vm = this;
+                        axios.put("/api/user", user).then(function (response) {
+                            vm.$Message.success('离职成功!');
+                        }).catch(function (error) {
+                            vm.$Message.error('离职失败!' + error);
+                        });
+                    }
+                }
+            }
+        })
+
+
+    </script>
+}

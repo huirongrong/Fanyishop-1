@@ -1,0 +1,96 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot/~%24ploads.docx" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\css\fonts\ionicons.eot" />
+    <Content Include="wwwroot\css\fonts\ionicons.svg" />
+    <Content Include="wwwroot\css\fonts\ionicons.ttf" />
+    <Content Include="wwwroot\css\fonts\ionicons.woff" />
+    <Content Include="wwwroot\css\iview.css" />
+    <Content Include="wwwroot\images\doc.svg" />
+    <Content Include="wwwroot\images\history-clock-button.svg" />
+    <Content Include="wwwroot\images\jpg.svg" />
+    <Content Include="wwwroot\images\magnifying-glass.svg" />
+    <Content Include="wwwroot\images\more.svg" />
+    <Content Include="wwwroot\images\time.svg" />
+    <Content Include="wwwroot\images\white-fix.png" />
+    <Content Include="wwwroot\images\zip.svg" />
+    <Content Include="wwwroot\js\axios.min.js" />
+    <Content Include="wwwroot\js\base64.js" />
+    <Content Include="wwwroot\js\crypto1\aes\aes-min.js" />
+    <Content Include="wwwroot\js\crypto1\aes\aes.js" />
+    <Content Include="wwwroot\js\crypto1\cbc\cbc-min.js" />
+    <Content Include="wwwroot\js\crypto1\cbc\cbc.js" />
+    <Content Include="wwwroot\js\crypto1\crypto-1.0.zip" />
+    <Content Include="wwwroot\js\crypto1\crypto-md5\crypto-md5.js" />
+    <Content Include="wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-marc4\crypto-sha1-hmac-pbkdf2-marc4.js" />
+    <Content Include="wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-ofb-aes\crypto-sha1-hmac-pbkdf2-ofb-aes.js" />
+    <Content Include="wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-rabbit\crypto-sha1-hmac-pbkdf2-rabbit.js" />
+    <Content Include="wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2\crypto-sha1-hmac-pbkdf2.js" />
+    <Content Include="wwwroot\js\crypto1\crypto-sha1\crypto-sha1.js" />
+    <Content Include="wwwroot\js\crypto1\crypto-sha256\crypto-sha256.js" />
+    <Content Include="wwwroot\js\crypto1\crypto\crypto-min.js" />
+    <Content Include="wwwroot\js\crypto1\crypto\crypto.js" />
+    <Content Include="wwwroot\js\crypto1\hmac\hmac-min.js" />
+    <Content Include="wwwroot\js\crypto1\hmac\hmac.js" />
+    <Content Include="wwwroot\js\crypto1\marc4\marc4-min.js" />
+    <Content Include="wwwroot\js\crypto1\marc4\marc4.js" />
+    <Content Include="wwwroot\js\crypto1\md5\md5-min.js" />
+    <Content Include="wwwroot\js\crypto1\md5\md5.js" />
+    <Content Include="wwwroot\js\crypto1\ofb\ofb-min.js" />
+    <Content Include="wwwroot\js\crypto1\ofb\ofb.js" />
+    <Content Include="wwwroot\js\crypto1\pbkdf2\pbkdf2-min.js" />
+    <Content Include="wwwroot\js\crypto1\pbkdf2\pbkdf2.js" />
+    <Content Include="wwwroot\js\crypto1\rabbit\rabbit-min.js" />
+    <Content Include="wwwroot\js\crypto1\rabbit\rabbit.js" />
+    <Content Include="wwwroot\js\crypto1\sha1\sha1-min.js" />
+    <Content Include="wwwroot\js\crypto1\sha1\sha1.js" />
+    <Content Include="wwwroot\js\crypto1\sha256\sha256-min.js" />
+    <Content Include="wwwroot\js\crypto1\sha256\sha256.js" />
+    <Content Include="wwwroot\js\iview.js" />
+    <Content Include="wwwroot\js\iview.min.js" />
+    <Content Include="wwwroot\js\moment.js" />
+    <Content Include="wwwroot\js\plupload-2.1.2\js\moxie.js" />
+    <Content Include="wwwroot\js\plupload-2.1.2\js\moxie.min.js" />
+    <Content Include="wwwroot\js\plupload-2.1.2\js\Moxie.swf" />
+    <Content Include="wwwroot\js\plupload-2.1.2\js\Moxie.xap" />
+    <Content Include="wwwroot\js\plupload-2.1.2\js\plupload.dev.js" />
+    <Content Include="wwwroot\js\plupload-2.1.2\js\plupload.full.min.js" />
+    <Content Include="wwwroot\js\plupload-2.1.2\js\plupload.min.js" />
+    <Content Include="wwwroot\js\plupload-2.1.2\license.txt" />
+    <Content Include="wwwroot\js\plupload-2.1.2\readme.md" />
+    <Content Include="wwwroot\js\upload.js" />
+    <Content Include="wwwroot\js\vue.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Marten" Version="1.5.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" />
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
+</Project>

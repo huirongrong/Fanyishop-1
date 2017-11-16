@@ -1,0 +1,242 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section styles{
+    <style type="text/css">
+        th {
+            text-align: center;
+        }
+
+        .Success {
+            color: #19be6b;
+        }
+
+        .Warning {
+            color: #ff9900;
+        }
+
+        .Error {
+            font-weight: bold;
+            color: #ed3f14;
+        }
+    </style>
+}
+
+<div class="layout-content">
+
+    <div class="container" style="max-width:100%;">
+        <div class="assignment-title" style="text-align:center; font-size:14px;">
+
+            <Icon type="person"></Icon>
+
+            <span style="margin-right:10px;">{{userName}}的单号</span>
+
+            <i-select v-model="year" style="width:100px" placeholder="请选择年" @@on-change="fetchData">
+                <i-option v-for="item in years" :value="item.value" :key="item">{{ item.label }}</i-option>
+            </i-select>
+            <i-select v-model="month" style="width:100px" placeholder="请选择月" @@on-change="fetchData">
+                <i-option v-for="item in monthes" :value="item.value" :key="item">{{ item.label }}</i-option>
+            </i-select>
+        </div>
+        <i-table :columns="columns" :data="assignments"></i-table>
+    </div>
+
+</div>
+@section scripts{
+    <script>
+
+    moment.locale("zh-cn");
+
+    var currentYear = moment().year();
+    var currentMonth = moment().month() + 1;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            userName: "@Html.Raw(ViewData["userName"])",
+            userId: @Html.Raw(ViewData["userId"]),
+                year: currentYear.toString(),
+                    month: currentMonth.toString(),
+                        years: [
+                            {
+                                value: '2017',
+                                label: '2017年'
+                            }
+                        ],
+                            monthes: [
+                                {
+                                    value: '1',
+                                    label: '1月'
+                                },
+                                {
+                                    value: '2',
+                                    label: '2月'
+                                },
+                                {
+                                    value: '3',
+                                    label: '3月'
+                                },
+                                {
+                                    value: '4',
+                                    label: '4月'
+                                },
+                                {
+                                    value: '5',
+                                    label: '5月'
+                                },
+                                {
+                                    value: '6',
+                                    label: '6月'
+                                },
+                                {
+                                    value: '7',
+                                    label: '7月'
+                                },
+                                {
+                                    value: '8',
+                                    label: '8月'
+                                },
+                                {
+                                    value: '9',
+                                    label: '9月'
+                                },
+                                {
+                                    value: '10',
+                                    label: '10月'
+                                },
+                                {
+                                    value: '11',
+                                    label: '11月'
+                                },
+                                {
+                                    value: '12',
+                                    label: '12月'
+                                }
+                            ],
+                                columns: [
+                                    {
+                                        title: '单号',
+                                        key: 'no',
+                                        width: 125,
+                                        render: function (row) {
+                                            var no = '<a href="/home/assignment/' + row.no + '">' + row.no + '</a>';
+                                            if (row.isClass)
+                                            { 
+                                                no += '<Tag color="blue">网课</Tag>';
+                                            }
+                                            return no;
+                                        }
+                                    },
+                                    {
+                                        title: '状态',
+                                        key: 'status',
+                                        width: 100
+                                    },
+                                    {
+                                        title: '字数要求',
+                                        width: 125,
+                                        render: function (row) {
+                                            return row.wordCount + "字/" + row.pageCount + "页";
+                                        }
+                                    },
+                                    {
+                                        title: '下单时间',
+                                        render: function (row) {
+                                            return moment(row.addTime).format('lll');
+                                        }
+                                    },
+                                    {
+                                        title: '分配时间',
+                                        render: function (row) {
+                                            return moment(row.assignTime).format('lll');
+                                        }
+                                    },
+                                    {
+                                        title: '规定交稿时间',
+                                        render: function (row) {
+                                            return moment(row.finishDue).format('lll');
+                                        }
+                                    },
+                                    {
+                                        title: '首次交稿时间',
+                                        render: function (row) {
+                                            if (row.finishTime == null) {
+                                                return "暂无";
+                                            }
+                                            if (moment(row.finishTime[0]) >= moment(row.finishDue)) {
+                                                return moment(row.finishTime[0]).format('lll') + "<span class='Warning'>(超时)</span>"
+                                            }
+
+                                            return moment(row.finishTime[0]).format('lll');
+                                        }
+                                    },
+                                    {
+                                        title: '截止交稿时间',
+                                        render: function (row) {
+                                            return moment(row.due).format('lll');
+                                        }
+                                    },
+                                    {
+                                        title: '最终交稿时间',
+                                        render: function (row) {
+                                            if (row.finishTime == null) {
+                                                return "暂无";
+                                            }
+                                            if (moment(row.finishTime[row.finishTime.length - 1]) >= moment(row.due)) {
+                                                return moment(row.finishTime[row.finishTime.length - 1]).format('lll') + "<span class='Error'>(拖单)</span>"
+                                            }
+
+                                            return moment(row.finishTime[row.finishTime.length - 1]).format('lll');
+                                        }
+                                    },
+                                    {
+                                        title: '审核通过时间',
+                                        render: function (row) {
+                                            if (row.reviewTime == null) {
+                                                return "暂无";
+                                            }
+                                            return moment(row.reviewTime[row.reviewTime.length - 1]).format('lll');
+                                        }
+                                    },
+                                    {
+                                        title: '主编评分',
+                                        key: 'reviewScore',
+                                        width: 100
+                                    },
+                                    {
+                                        title: '客户评分',
+                                        key: 'feedbackRating',
+                                        width: 100
+                                    }
+                                ],
+                                    assignments: []
+        },
+            created: function () {
+                this.fetchData();
+            },
+            methods: {
+                fetchData: function () {
+                    var _this = this;
+
+                    axios.get("/api/assignment/GetByUser", {
+                        params: {
+                            userId: _this.userId,
+                            year: _this.year,
+                            month: _this.month
+                        }
+                    }).then(function (response) {
+                        _this.assignments = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                formatTime: function (val) {
+                    return moment(val).format('llll');
+                }
+            }
+    })
+
+
+    </script>
+}

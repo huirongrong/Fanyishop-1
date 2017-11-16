@@ -1,0 +1,231 @@
+﻿@model FanyiNetwork.Models.Assignment
+@{
+    Layout = "_Layout";
+}
+
+@section styles{
+
+}
+<div class="layout-content">
+    <div class="container">
+        <i-form :model="formValidate" ref="formValidate" :rules="validateRules" :label-width="80" enctype="multipart/form-data">
+
+            <div class="assignment-title">
+                新建兼职单号
+            </div>
+
+            <Row>
+                <i-col span="12">
+                    <Form-item label="单号">
+                        <i-input v-model="formValidate.no" placeholder="默认自动生成，可在此手动输入" disabled></i-input>
+                    </Form-item>
+                </i-col>
+                <i-col span="12">
+                    <Form-item label="类型">
+                        <i-switch size="large" v-model="formValidate.isClass">
+                            <span slot="open">网课</span>
+                            <span slot="close">网课</span>
+                        </i-switch>
+                    </Form-item>
+                </i-col>
+            </Row>
+            <Row>
+                <i-col span="24">
+                    <Form-item label="主题">
+                        <i-input v-model="formValidate.topic" placeholder="文章主题类型，网课名称及客户名称等。例：Writing39C - XXX"></i-input>
+                    </Form-item>
+                </i-col>
+            </Row>
+            <Row>
+                <i-col span="24">
+                    <Form-item label="客户">
+                        <i-select v-model="formValidate.client" filterable>
+                            <i-option v-for="item in clients" :value="item.id" :key="item.id">{{ item.name }}</i-option>
+                        </i-select>
+                    </Form-item>
+                </i-col>
+            </Row>
+            <Row>
+                <i-col span="12">
+                    <Form-item label="交付日期" prop="dueDate">
+                        <Date-picker type="date" placeholder="选择日期" v-model="formValidate.dueDate"></Date-picker>
+                    </Form-item>
+                </i-col>
+                <i-col span="12">
+                    <Form-item label="交付时间" prop="dueTime">
+                        <Time-picker format="HH:mm" placeholder="选择时间" v-model="formValidate.dueTime"></Time-picker>
+                    </Form-item>
+                </i-col>
+            </Row>
+            <Row>
+                <i-col span="24">
+                    <Form-item label="时间备注">
+                        <Alert show-icon>兼职单号时间固定为最终截稿时间，可根据实际情况调整。</Alert>
+                    </Form-item>
+                </i-col>
+            </Row>
+            <Row>
+                <i-col span="12">
+                    <Form-item label="字数要求">
+                        <i-input v-model="formValidate.wordCount" placeholder="请输入"></i-input>
+                    </Form-item>
+                </i-col>
+                <i-col span="12">
+                    <Form-item label="页数要求">
+                        <Input-number :max="99" :min="1" v-model="formValidate.pageCount" @@on-change="calculateWordCount"></Input-number> 页
+
+                        (默认Double Space)
+                    </Form-item>
+                </i-col>
+            </Row>
+            <Row>
+                <i-col span="12">
+                    <Form-item label="格式要求">
+                        <i-select v-model="formValidate.style">
+                            <i-option value="mla">MLA</i-option>
+                            <i-option value="apa">APA</i-option>
+                        </i-select>
+                    </Form-item>
+                </i-col>
+                <i-col span="12">
+                    <Form-item label="引用个数">
+                        <Input-number :max="99" :min="1" v-model="formValidate.referenceCount"></Input-number>
+                    </Form-item>
+                </i-col>
+            </Row>
+            <Row>
+                <i-col span="12">
+                    <Form-item label="应付金额">
+                        <i-input v-model="formValidate.cost" placeholder="请输入" style="width:65%; float:left;"></i-input>
+                        <i-select v-model="formValidate.currency" placeholder="请选择" style="width:35%;">
+                            <i-option value="人民币">人民币</i-option>
+                            <i-option value="美金">美金</i-option>
+                            <i-option value="欧元">欧元</i-option>
+                            <i-option value="加拿大币">加拿大币</i-option>
+                            <i-option value="澳元">澳元</i-option>
+                        </i-select>
+                    </Form-item>
+                </i-col>
+                <i-col span="12">
+                    <Form-item label="星级客户">
+                        <i-switch v-model="formValidate.isImportant"></i-switch>
+                    </Form-item>
+                </i-col>
+            </Row>
+
+            <Form-item label="其他要求">
+                <i-input v-model="formValidate.other" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="请输入..."></i-input>
+            </Form-item>
+            <Form-item label="上传附件">
+                <Upload multiple
+                        type="drag"
+                        action="/File/Post?no=@Model.no&type=attachments"
+                        :data="formValidate.no"
+                        :before-upload="handleBeforeUpload">
+                    <div style="padding: 20px 0">
+                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                        <p>点击或将文件拖拽到这里上传</p>
+                    </div>
+                </Upload>
+            </Form-item>
+
+            @*<div class="assignment-title">
+    分配单号
+    </div>
+
+    <Row>
+        <i-col span="12">
+            <Form-item label="负责编辑">
+                <i-select v-model="formValidate.editor" placeholder="请选择" style="width:220px;">
+                    <i-option value="'0'">等待分配</i-option>
+                    <i-option v-for="item in editors" :value="item.id" :key="item">{{ item.name }}</i-option>
+                </i-select>
+            </Form-item>
+        </i-col>
+        <i-col span="12">
+            <Form-item label="负责客服">
+                @User.Identity.Name
+            </Form-item>
+        </i-col>
+    </Row>*@
+
+                <Form-item>
+                    <Row>
+                        <i-col span="8">&nbsp;</i-col>
+                        <i-col span="8" style="text-align:center;">
+                            <i-button type="primary" @@click="handleSubmit('formValidate')">提交</i-button>
+                            <i-button type="ghost" @@click="handleReset('formValidate')" style="margin-left: 8px">重置</i-button>
+                        </i-col>
+                        <i-col span="8">&nbsp;</i-col>
+                    </Row>
+                </Form-item>
+</i-form>
+    </div>
+</div>
+@section scripts{
+    <script>
+
+        moment.locale("zh-cn");
+
+        var assignment = @Html.Raw(Json.Serialize(Model));
+
+    new Vue({
+        el: '#app',
+        data: {
+            clients: [],
+            formValidate: assignment,
+            validateRules: {
+                dueDate: [
+                    { required: true, message: '交付日期不能为空', trigger: 'blur' }
+                ],
+                dueTime: [
+                    { required: true, message: '交付时间不能为空', trigger: 'blur' }
+                ]
+            },
+            editors: []
+        },
+        created: function () {
+            var _this = this;
+            axios.get("/api/client/").then(function (response) {
+                _this.clients = response.data;
+            }).catch(function (error) {
+                _this.$Message.error('查询客户失败!' + error.response.data);
+            });
+            this.fetchEditors();
+        },
+        methods: {
+
+            calculateWordCount: function () {
+                this.formValidate.wordCount = this.formValidate.pageCount * 275;
+            },
+            handleBeforeUpload: function (file) {
+                var pattern = /[$&,:;=?@@#|'<>^*%!]/;
+
+                if (file.name.match(pattern)) {
+                    this.$Message.error("上传文件名不能包含#,@@,$,%,!,<>等特殊符号，请检查后重新上传！")
+                    return false;
+                }
+            },
+            handleSubmit(name) {
+                var _this = this;
+
+                axios.post('/api/assignment', this.formValidate)
+                    .then(function (response) {
+                        _this.$Message.success('操作成功!');
+
+                        setTimeout(function () {
+                            window.location.href = "/home/index";
+                        }, 1000);
+                    })
+                    .catch(function (error) {
+                        _this.$Message.error('操作失败!' + error.response.data);
+                    });
+            },
+            handleReset(name) {
+                this.$refs[name].resetFields();
+            }
+        }
+    })
+
+    </script>
+}

@@ -1,0 +1,94 @@
+.layout {
+    border: 1px solid #d7dde4;
+    background: #f5f7f9;
+}
+
+.layout-logo {
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height:30px;
+    color:#FFF;
+    background: #5b6270;
+    border-radius: 3px;
+    float: left;
+    position: relative;
+    top: 15px;
+    left: 20px;
+}
+
+.layout-user {
+    float:right;
+    padding:0 25px;
+    color:#FFF;
+}
+
+.layout-assistant {
+    width: 525px;
+    margin: 0 auto;
+    height: inherit;
+}
+
+.layout-breadcrumb {
+    padding: 10px 15px 0;
+}
+
+.layout-content {
+    min-height: 250px;
+    margin: 15px;
+    border-radius: 4px;
+    font-size:12px;
+}
+
+.layout-content-main {
+    padding: 10px;
+}
+
+.layout-copy {
+    text-align: center;
+    padding: 10px 0 20px;
+    color: #9ea7b4;
+}
+
+.clearfix::after {
+  content: '';
+  display: table;
+  clear: both; }
+
+.container {
+  margin-top: 16px;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto; }
+  .container:after {
+    content: " ";
+    display: block;
+    clear: both; }
+  .container::after {
+    content: '';
+    display: table;
+    clear: both; }
+
+.assignmentTimeTitle {
+    width:100%;
+    float:left;
+    padding:10px;
+    font-weight:bold;
+}
+
+.assignment-title {
+    color: #464c5b;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #dddee1;
+    margin: 15px 0;
+    padding-bottom: 15px;
+}
+
+ul.flows {
+    padding:0 15px 0 25px;
+    list-style:circle;
+}
+    ul.flows li span.time {
+        float: right;
+    }

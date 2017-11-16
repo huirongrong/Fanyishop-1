@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section styles{
+
+}
+<div class="layout-content">
+    <div class="container" style="text-align:center; line-height:100px;">
+        登出成功！<br />
+        <a href="~/account/login"><i-button type="primary">重新登录</i-button></a>
+        <a href="~/account/register"><i-button type="text">注册</i-button></a>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var vm = new Vue({
+
+            el: '#app'
+
+        });
+    </script>
+}

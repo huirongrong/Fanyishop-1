@@ -1,0 +1,1123 @@
+﻿@model FanyiNetwork.Models.Assignment
+@{
+    Layout = "_Layout";
+}
+
+@section styles{
+    <style>
+        ul.uploads li {
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #F5F7F9;
+        }
+
+            ul.uploads li:hover {
+                border-bottom: 1px solid #DDE3EA;
+            }
+
+        ul.finishedWorks {
+            padding: 15px 0;
+        }
+
+            ul.finishedWorks li {
+                background: #FFFFCC;
+                padding: 15px 20px 15px 20px;
+            }
+
+        .uploadImg {
+            float: left;
+            margin-right: 10px;
+            width: 24px;
+            vertical-align: middle;
+        }
+
+        .uploadAction {
+            float: right;
+        }
+
+        .vertical-center-modal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ivu-modal {
+            top: 0;
+        }
+
+        .checkModelContainer {
+            text-align: center;
+            margin: 30px 0;
+            display: table;
+            width: 100%;
+        }
+
+        .checkModelCell {
+            display: table-cell;
+            pointer-events: all;
+            width: 18%;
+            height: 100%;
+            padding: 10px;
+            text-align: left;
+            line-height: 18px;
+        }
+
+            .checkModelCell.active {
+                background: #3399FF;
+                color: #FFF;
+            }
+
+            .checkModelCell:hover {
+                background: #5cadff;
+                color: #FFF;
+                transition: none;
+            }
+
+            .checkModelCell.active:hover {
+                background: #3399FF;
+                color: #FFF;
+            }
+
+        .reviewScoreDetails {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+            .reviewScoreDetails li {
+                display: inline-block;
+                margin: 0 15px;
+                font-size: 16px;
+            }
+
+        .timeSchedule {
+            margin: 25px 0;
+        }
+
+            .timeSchedule .ivu-steps .ivu-steps-head, .timeSchedule .ivu-steps .ivu-steps-title, .timeSchedule .ivu-steps-item.ivu-steps-status-finish .ivu-steps-head-inner {
+                background: #F5F7F9;
+            }
+
+            .timeSchedule .ivu-steps-item.ivu-steps-status-finish .ivu-steps-title {
+                color: #666;
+            }
+    </style>
+}
+
+<div class="container">
+    <i-input v-model="searchText" placeholder="请输入需要查询的单号..." @@on-enter="redirect"></i-input>
+</div>
+
+<div class="layout-content">
+    <div class="container">
+
+
+        <Alert show-icon v-if="assignment.isParttime == true && assignment.status == '待交稿' && assignment.isParttimeConfirm == false">
+            该单号已分配至你，请详细查阅写作要求后及时点击下方按钮选择是否接单
+
+            <template slot="desc">
+                <br />
+                <i-button type="success" @@click="handleParttimeConfirm(true)">确认接单</i-button>
+                <i-button type="error" @@click="handleParttimeConfirm(false)">无法接单</i-button>
+            </template>
+        </Alert>
+
+        <Alert show-icon type="warning" closable v-for="item in notifications" @@on-close="handleCloseNotification(item)">{{ item.message }}</Alert>
+
+        <i-form :model="assignment" ref="assignment" :label-width="80" enctype="multipart/form-data">
+            <Row class="timeSchedule">
+                <Steps :current="statusCurrent">
+                    <Step icon="clock" :title="this.checkFinishTime()" :content="formatTime(assignment.finishDue)"></Step>
+                    <Step icon="clock" :title="this.checkReviewTime()" :content="formatTime(assignment.reviewDue)"></Step>
+                    <Step icon="clock" :title="this.checkDueTime()" :content="formatTime(assignment.due)"></Step>
+                </Steps>
+            </Row>
+            <Row>
+                <div class="assignment-title">
+                    {{ assignment.no }} 基本信息
+                    <i-button type="info" size="small">{{ assignment.status }}</i-button>
+                    <Tag v-if="assignment.isParttime" color="yellow">兼职</Tag>
+
+                    @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "客服部" || x.Value == "人事部" || x.Value == "客服主管" || x.Value == "经理办")))
+                    {
+                        <div style="float:right;">
+                            <i-switch size="large" v-model="assignment.late" @@on-change="handleFeedback">
+                                <span slot="open">拖单</span>
+                                <span slot="close">拖单</span>
+                            </i-switch>
+                            <i-switch size="large" v-model="assignment.plagiarism" @@on-change="handleFeedback">
+                                <span slot="open">抄袭</span>
+                                <span slot="close">抄袭</span>
+                            </i-switch>
+                            <i-switch size="large" v-model="assignment.negativereview" @@on-change="handleFeedback">
+                                <span slot="open">差评</span>
+                                <span slot="close">差评</span>
+                            </i-switch>
+                            <i-switch size="large" v-model="assignment.fail" @@on-change="handleFeedback">
+                                <span slot="open">挂单</span>
+                                <span slot="close">挂单</span>
+                            </i-switch>
+                            <i-switch size="large" v-model="assignment.refund" @@on-change="handleFeedback">
+                                <span slot="open">退款</span>
+                                <span slot="close">退款</span>
+                            </i-switch>
+                        </div>
+                    }
+                </div>
+            </Row>
+            <Form-item label="单号主题">
+                <span style="white-space:pre-wrap; word-wrap:break-word;">{{ assignment.topic }}</span>
+            </Form-item>
+            <Row>
+                <i-col span="12">
+                    <Form-item label="字数要求">
+                        <span v-if="assignment.wordCount != 0">{{ assignment.wordCount }} 字</span>
+                        <span v-if="assignment.pageCount != 0">{{ assignment.pageCount }} 页</span>
+                    </Form-item>
+                </i-col>
+                <i-col span="12">
+                    <Form-item label="格式要求">
+                        文章格式：{{ assignment.style }}
+                        引用个数：{{ assignment.referenceCount }} 个
+                    </Form-item>
+                </i-col>
+            </Row>
+
+            <Form-item label="其他要求">
+                <span style="white-space:pre-wrap; word-wrap:break-word;">{{ assignment.other }}</span>
+            </Form-item>
+
+            @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "客服部" || x.Value == "客服主管" || x.Value == "经理办")))
+            {
+                <Row style="text-align:center;">
+                    <i-button type="primary" @@click="handleToggleEdit">修改基本信息</i-button>
+                    <i-button type="primary" @@click="handleSMS">发送短信提醒</i-button>
+                    <a href="/home/release/@ViewData["encodedUrl"]"><i-button type="primary">生成客户下载链接</i-button></a>
+                    <i-button type="primary" @@click="handleClose" v-if="assignment.status=='待发送'">关闭该单</i-button>
+                    <i-button type="primary" @@click="handleReopen" v-if="assignment.status=='已完成'">重新开启</i-button>
+                    @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "客服主管" || x.Value == "经理办")))
+                {
+                        <i-button type="error" @@click="handleDelete" icon="trash-a">删除</i-button>
+                    }
+                </Row>
+
+                <div v-if="editMode">
+                    <Row>
+                        <div class="assignment-title">
+                            修改基本信息
+                        </div>
+                    </Row>
+                    <Row>
+                        <i-col span="24">
+                            <Form-item label="主题">
+                                <i-input v-model="assignment.topic" placeholder="文章主题类型，网课名称及客户名称等。例：Writing39C - XXX"></i-input>
+                            </Form-item>
+                        </i-col>
+                    </Row>
+                    <Row>
+                        <i-col span="12">
+                            <Form-item label="交付日期">
+                                <Date-picker type="date" placeholder="选择日期" v-model="assignment.due"></Date-picker>
+                            </Form-item>
+                        </i-col>
+                        <i-col span="12">
+                            <Form-item label="交付时间">
+                                <Time-picker type="datetime" format="HH:mm" placeholder="选择时间" v-model="assignment.due"></Time-picker>
+                            </Form-item>
+                        </i-col>
+                    </Row>
+                    <Form-item label="页数要求">
+                        <Input-number :max="10" :min="1" v-model="assignment.pageCount"></Input-number> 页
+                    </Form-item>
+                    <Form-item label="字数要求">
+                        <i-input v-model="assignment.wordCount" placeholder="请输入"></i-input>
+                    </Form-item>
+                    <Row>
+                        <i-col span="12">
+                            <Form-item label="格式要求">
+                                <i-select v-model="assignment.style" placeholder="请选择">
+                                    <i-option value="mla">MLA</i-option>
+                                    <i-option value="apa">APA</i-option>
+                                </i-select>
+                            </Form-item>
+                        </i-col>
+                        <i-col span="12">
+                            <Form-item label="引用个数">
+                                <Input-number :max="10" :min="1" v-model="assignment.referenceCount"></Input-number>
+                            </Form-item>
+                        </i-col>
+                    </Row>
+                    <Row>
+                        <i-col span="12">
+                            <Form-item label="应付金额">
+                                <i-input v-model="assignment.cost" placeholder="请输入" style="width:65%; float:left;"></i-input>
+                                <i-select v-model="assignment.currency" placeholder="请选择" style="width:35%;">
+                                    <i-option value="人民币">人民币</i-option>
+                                    <i-option value="美金">美金</i-option>
+                                    <i-option value="欧元">欧元</i-option>
+                                    <i-option value="加拿大币">加拿大币</i-option>
+                                    <i-option value="澳元">澳元</i-option>
+                                </i-select>
+                            </Form-item>
+                        </i-col>
+                        <i-col span="12">
+                            <Form-item label="星级客户">
+                                <i-switch v-model="assignment.isImportant"></i-switch>
+                            </Form-item>
+                        </i-col>
+                    </Row>
+                    <Form-item label="其他要求">
+                        <i-input v-model="assignment.other" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="请输入..."></i-input>
+                    </Form-item>
+
+                    <Row style="text-align:center;">
+                        <i-button type="primary" @@click="handleModify()">确认修改</i-button>
+                        <i-button type="primary" @@click="handleCancelModify()">取消</i-button>
+                    </Row>
+
+                </div>
+            }
+
+            <div v-if="this.assignment.reviewScores != null && this.assignment.reviewScore != null">
+                <Row>
+                    <div class="assignment-title">
+                        审核内容
+                    </div>
+                </Row>
+                <Row>
+                    <Form-item label="主编评分">
+                        <b>总分: {{ this.assignment.reviewScore }} 分</b>
+
+                        <span style="margin-left:15px; color:#80848f;">
+                            <Icon type="connection-bars"></Icon> 内容: {{ this.assignment.reviewScores[0] }} 分 &nbsp;
+                            <Icon type="connection-bars"></Icon> 结构: {{ this.assignment.reviewScores[1] }} 分 &nbsp;
+                            <Icon type="connection-bars"></Icon> 语法: {{ this.assignment.reviewScores[2] }} 分 &nbsp;
+                            <Icon type="connection-bars"></Icon> 格式: {{ this.assignment.reviewScores[3] }} 分 &nbsp;
+                            <Icon type="connection-bars"></Icon> 时间: {{ this.assignment.reviewScores[4] }} 分 &nbsp;
+                            <Icon type="connection-bars"></Icon> 难度: {{ this.assignment.reviewScores[4] }} 分
+                        </span>
+                    </Form-item>
+                    <Form-item label="主编意见" v-for="item in assignment.reviews">
+                        {{ item }}
+                    </Form-item>
+                </Row>
+            </div>
+
+            <div v-if="assignment.status != '待分配'">
+                <Row>
+                    <div class="assignment-title">
+                        最终稿件
+                    </div>
+                </Row>
+                <Row>
+                    <ul v-if="finished.length > 0" class="finishedWorks">
+                        <li v-for="file in finished">
+                            <img class="uploadImg" src="~/images/doc.svg" />
+                            <b style="font-size:14px;">{{ file.name }}</b> <span style="color:#CCC;"> &nbsp; {{ file.size }}</span>
+                            <div class="uploadAction">
+                                <span style="color:#CCC;">{{ formatTime(file.time) }}</span>
+                                &nbsp;
+                                <i-button v-if="assignment.status == '待交稿'" icon="ios-download" @@click="deleteWork(assignment.no, file.name);">取消</i-button>
+                                <i-button v-if="assignment.status == '待修改'" icon="ios-download" @@click="deleteWork(assignment.no, file.name);">取消</i-button>
+                                <i-button icon="ios-download" @@click="download(assignment.no, 'finished', file.name);">下载</i-button>
+                            </div>
+                        </li>
+                        <li style="text-align:center;">
+                            <i-button icon="ios-download" type="primary" @@click="handleSubmitForCheck" v-if="assignment.status == '待交稿'">确认提交审核</i-button>
+                            <i-button icon="ios-download" type="primary" @@click="handleSubmitForCheck" v-if="assignment.status == '待修改'">确认提交审核</i-button>
+                            <i-button icon="ios-download" type="primary" @@click="handleSubmitForCheck" v-if="assignment.status == '待审核'" loading>等待审核结果</i-button>
+                        </li>
+                    </ul>
+                    <div v-if="finished.length <= 0" style="font-size:14px; text-align:center;">
+                        无最终稿件
+                    </div>
+                </Row>
+
+                <Modal v-model="checkModel" v-if="this.assignment.reviewScores != null && this.assignment.reviewScore != null"
+                       title="正在进行审核评分..." class-name="vertical-center-modal" width="960" :mask-closable="false">
+
+                    <p>
+                        <Steps :current="checkCurrent">
+                            <Step title="内容"></Step>
+                            <Step title="结构"></Step>
+                            <Step title="语法"></Step>
+                            <Step title="格式"></Step>
+                            <Step title="时间"></Step>
+                            <Step title="难度"></Step>
+                            <Step title="完成"></Step>
+                        </Steps>
+                    </p>
+
+                    <ul class="checkModelContainer">
+
+                        <li class="checkModelCell" v-if="checkCurrent >= 0 && checkCurrent <= 5" v-for="cc in reviewCriterias[checkCurrent]" v-bind:class="{ 'active': cc.Score == assignment.reviewScores[checkCurrent] }">
+                            <div style="text-align:center;font-size:16px; margin:15px 0; font-weight:bold;">{{ cc.Score }}分</div>
+                            <p v-for="item in cc.Items" @@click="setReviewScore(checkCurrent, cc.Score)">
+                                {{ item }}
+                            </p>
+                        </li>
+
+                        <li v-if="checkCurrent > 5">
+                            <h3>得分详细</h3>
+                            <ul class="reviewScoreDetails">
+                                <li>
+                                    <Icon type="connection-bars"></Icon> 内容: {{ this.assignment.reviewScores[0] }} 分
+                                </li>
+                                <li>
+                                    <Icon type="connection-bars"></Icon> 结构: {{ this.assignment.reviewScores[1] }} 分
+                                </li>
+                                <li>
+                                    <Icon type="connection-bars"></Icon> 语法: {{ this.assignment.reviewScores[2] }} 分
+                                </li>
+                                <li>
+                                    <Icon type="connection-bars"></Icon> 格式: {{ this.assignment.reviewScores[3] }} 分
+                                </li>
+                                <li>
+                                    <Icon type="connection-bars"></Icon> 时间: {{ this.assignment.reviewScores[4] }} 分
+                                </li>
+                                <li>
+                                    <Icon type="connection-bars"></Icon> 难度: {{ this.assignment.reviewScores[5] }} 分
+                                </li>
+                                <li><Icon type="connection-bars"></Icon> <b>总分: {{ this.assignment.reviewScore }} 分</b></li>
+                            </ul>
+                            <h3>审核意见</h3>
+                            <br />
+                            <i-input v-model="review" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="请输入审核意见"></i-input>
+                        </li>
+                    </ul>
+
+                    <div slot="footer" v-if="checkCurrent<=5">
+                        <i-button type="primary" @@click="checkStep(-1);" size="large" style="float:left;" v-if="checkCurrent>0">上一步</i-button>
+
+                        <label>当前得分：{{ this.assignment.reviewScore }} 分</label> &nbsp;
+
+                        <i-button type="primary" @@click="skipToStep(6);" size="large">跳过</i-button>
+
+                        <i-button type="primary" @@click="checkStep(1);" size="large">下一步</i-button>
+                    </div>
+                    <div slot="footer" v-if="checkCurrent>5">
+                        <i-button type="primary" @@click="checkStep(-1);" size="large" style="float:left;">上一步</i-button>
+
+                        <i-button type="primary" @@click="handleCheck(true)">审核通过</i-button>
+                        <i-button type="warning" @@click="handleCheck(false)">审核不通过</i-button>
+                    </div>
+                </Modal>
+
+            </div>
+
+            @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编" || x.Value == "经理办")))
+            {
+                <div v-if="assignment.status == '待审核'">
+
+                    <Row style="text-align:center;">
+                        <i-button type="primary" @@click="beginCheck()">开始审核</i-button>
+                    </Row>
+                </div>
+            }
+
+            <Row>
+                <div class="assignment-title">
+                    文件区域
+                </div>
+            </Row>
+
+            <Form-item label="附件列表">
+                <ul class="uploads">
+                    <li v-for="file in attachments">
+                        <img class="uploadImg" src="~/images/doc.svg" />
+                        {{ file.name }} <span style="color:#CCC;"> &nbsp; {{ file.size }}</span>
+                        <div class="uploadAction">
+                            <span style="color:#CCC;">{{ formatTime(file.time) }}</span>
+
+                            &nbsp;
+
+                            <i-button type="ghost" icon="ios-download" @@click="download(assignment.no, 'attachments', file.name);">下载</i-button>
+                        </div>
+                    </li>
+                </ul>
+            </Form-item>
+
+            @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编" || x.Value == "客服主管" || x.Value == "客服部" || x.Value == "经理办")))
+            {
+                <Form-item label="上传附件" v-if="assignment.status != '已完成'">
+                    <Upload multiple
+                            type="drag"
+                            action="/File/Post?no=@Model.no&type=attachments"
+                            :data="assignment.no"
+                            :before-upload="handleBeforeUpload"
+                            :on-success="handleUploadSuccess"
+                            :on-error="handleUploadError">
+                        <div style="padding: 15px 0">
+                            <Icon type="ios-cloud-upload" size="32" style="color: #3399ff"></Icon>
+                            <p>点击或将文件拖拽到这里上传至附件列表</p>
+                        </div>
+                    </Upload>
+                </Form-item>
+            }
+
+            <Form-item label="稿件列表">
+                <ul class="uploads">
+                    <li v-for="file in works">
+                        <img class="uploadImg" src="~/images/doc.svg" />
+                        {{ file.name }} <span style="color:#CCC;"> &nbsp; {{ file.size }}</span>
+                        <div class="uploadAction">
+                            <span style="color:#CCC;">{{ formatTime(file.time) }}</span>
+
+                            &nbsp;
+
+                            @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编" || x.Value == "客服主管" || x.Value == "兼职编辑部" || x.Value == "编辑部" || x.Value == "经理办" || x.Value == "客服部")))
+                            {
+                                <i-button v-if="alreadyFinished(file.name)" type="default" icon="ios-download">已提交</i-button>
+                                <i-button v-else="alreadyFinished(file.name)" type="primary" icon="ios-download" @@click="finishWork(assignment.no, file.name);">交稿</i-button>
+                            }
+                            <i-button type="ghost" icon="ios-download" @@click="download(assignment.no, 'works', file.name);">下载</i-button>
+                        </div>
+                    </li>
+                </ul>
+            </Form-item>
+
+            @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编" || x.Value == "编辑部" || x.Value == "兼职编辑部" || x.Value == "经理办")))
+            {
+                <Form-item label="上传稿件">
+                    <Upload multiple
+                            type="drag"
+                            action="/File/Post?no=@Model.no&type=works"
+                            :data="assignment.no"
+                            :before-upload="handleBeforeUpload"
+                            :on-success="handleUploadSuccess"
+                            :on-error="handleUploadError">
+                        <div style="padding: 15px 0">
+                            <Icon type="ios-cloud-upload" size="32" style="color: #3399ff"></Icon>
+                            <p>点击或将文件拖拽到这里上传至稿件列表</p>
+                        </div>
+                    </Upload>
+                </Form-item>
+            }
+
+            <Row>
+                <div class="assignment-title">
+                    负责人
+                </div>
+            </Row>
+            <Row>
+                <i-col span="12">
+                    <Form-item label="负责编辑">
+                        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "编辑部" || x.Value == "兼职编辑部")))
+                        {
+                            <span>{{ editor.name }}</span>
+                        }
+                        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编" || x.Value == "经理办" || x.Value == "客服主管")))
+                        {
+                            <a v-if="editor.qq" target="_blank" :href="'http://wpa.qq.com/msgrd?v=3&uin=' + editor.qq + '&site=qq&menu=yes'"><img style="vertical-align:middle;" border="0" :src="'http://wpa.qq.com/pa?p=2:'+editor.qq+':51'" alt="点击这里给我发消息" title="点击这里给我发消息" /></a>
+                            <i-select v-model="assignment.editor" placeholder="未分配" style="width:220px;">
+                                <i-option v-for="item in editors" :value="item.id" :key="item">{{ item.name }}</i-option>
+                            </i-select>
+                            <i-button type="primary" @@click="handleAssign()" v-if="assignment.status == '待派单'">分配</i-button>
+                            <i-button type="primary" @@click="handleAssign()" v-else="assignment.status == '待派单'">重新分配</i-button>
+                        }
+                    </Form-item>
+                </i-col>
+                <i-col span="12">
+                    <Form-item label="负责客服">
+                        <a v-if="cs.qq" target="_blank" :href="'http://wpa.qq.com/msgrd?v=3&uin=' + cs.qq + '&site=qq&menu=yes'"><img style="vertical-align:middle;" border="0" :src="'http://wpa.qq.com/pa?p=2:'+cs.qq+':51'" alt="点击这里给我发消息" title="点击这里给我发消息" /></a>
+                        <span v-if="assignment.isParttime == true">客服</span>
+                        <span v-else="assignment.isParttime == true">{{ cs.name }}</span>
+
+                    </Form-item>
+                </i-col>
+            </Row>
+
+            <Row>
+                <div class="assignment-title">
+                    流程记录
+                </div>
+            </Row>
+            <Row>
+                <ul class="flows">
+                    <li v-for="flow in flows">
+                        <span v-if="assignment.isParttime == false">{{ flow.operator }} :</span>
+                        {{ flow.operation }}
+                        <span class="time">{{ moment(flow.time).format('llll') }}</span>
+                    </li>
+                </ul>
+            </Row>
+        </i-form>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+    moment.locale("zh-cn");
+
+    new Vue({
+        el: '#app',
+        data: {
+        searchText: '',
+        statusCurrent:0,
+        assignment: @Html.Raw(Json.Serialize(Model)),
+        attachments: [],
+        works: [],
+        finished:[],
+        cs: {},
+        editor: {},
+        editors: @Html.Raw(Json.Serialize(ViewData["Editors"])),
+        editMode: false,
+        review:'',
+        notifications: [],
+        flows: [],
+        checkModel: false,
+        checkCurrent: 0,
+        reviewCriterias: [[{
+            Score: 20, Active: false,
+            Items: ["符合以下所有情况：", "（1）文章选题非常清晰。", "（2）视角独特、具体。", "（3）运用的知识非常专业，对所学的理论理解非常到位。", "（4）对题目理解和把握非常到位。", "（5）逻辑性非常强。"]
+        }, {
+            Score: 17, Active: false,
+            Items: ["符合以下所有情况：", "（1）文章选题比较清晰。", "（2）知识运用熟练、有深度深度。", "（3）对题目理解的到位。", "（4）逻辑性相对强。"]
+        },
+        {
+            Score: 13, Active: false,
+            Items: ["符合以下所有情况：", "（1）跟所有知识有关联。", "（2）文章的深度一般。", "（3）文章的选题一般。", "（4）文章各部分的衔接一般。"]
+        },
+        {
+            Score: 8, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）跟所学的知识有微弱的关联度。", "（2）文章逻辑比较混乱。", "（3）部分篇幅跟文章没有关系。", "虽然是所处的学科，但是跟题目关联度不大。"]
+        },
+        {
+            Score: 0, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）跟所学的知识没有关联度。", "（2）跑题。", "（3）文章逻辑非常混乱、看不懂。"]
+        },], [{
+            Score: 20, Active: false,
+            Items: ["符合以下所有情况：", "（1）有完美的thesis和topic sentence。", "（2）Introduction有非常好的hook，给人眼前一亮的感觉；在能够充分的引起读者的兴趣的同时，引入主题。", "（3）Conclusion 能够引导读者总结文章主要内容；同时有很好的takeaway；并能够引起读者的反思。", "文章各部分的安排思路清晰，层层递进。"]
+        }, {
+            Score: 17, Active: false,
+            Items: ["符合以下所有情况：", "（1）有完整的thesis和topic sentence。", "（2）Introduction能够引起读者的兴趣，引入主题。", "（3）Conclusion 能够引导读者总结文章主要内容；同时能够引起读者的反思。", "（4）文章各部分的安排思路清晰。"]
+        },
+        {
+            Score: 13, Active: false,
+            Items: ["符合以下所有情况：", "（1）thesis完整，基本上达到要求。", "（2）Topic sentence 完整，基本达到要求。", "（3）文章各部分的结构搭配基本合理。", "（4）introduction基本上起到了引入文章的目的。", "（5）Conclusion基本上达到了总结全文主要内容的目的。"]
+        },
+        {
+            Score: 8, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）文章结构有问题。", "（2）文章有thesis，但是thesis不符合要求，没有达到overview of the whole article的目的。", "文章有topic sentence，但是topic sentence 没有达到overview of the whole paragraph的目的。", "（4）有introduction，但是没有起到引入主题的效果。", "（5）有conclusion，但是没有起到总结全文主要内容的效果。"]
+        },
+        {
+            Score: 0, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）整个文章的结构很混乱，没有逻辑。", "（2）文章没有thesis和topic sentence均缺失，或基本完全偏离内容。", "（3）文章没有introduction或conclusion。"]
+        }], [{
+            Score: 15, Active: false,
+            Items: ["符合以下所有情况：", "（1）语法错误少在三个以内。", "（2）标点符号正确。", "（3）文章的语感很好，整个文章的过渡很自然，连接词运用成熟。", "（4）文章的句式、转折词和长短句的搭配非常合理。"]
+        }, {
+            Score: 13, Active: false,
+            Items: ["符合以下所有情况：", "（1）语法错误少在七个以内。", "（2）标点符号正确。", "（3）文章的表达基本准确。", "（4）文章的句式、转折词和长短句的搭配很合理。"]
+        },
+        {
+            Score: 9, Active: false,
+            Items: ["符合以下所有情况：", "（1）文章语法错误在十五个以内。", "（2）整篇文章读起来基本通顺。", "（3）标点符号基本正确。"]
+        },
+        {
+            Score: 6, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）较多的语法错误，但是对文章内容的理解上影响较小。", "（2）文章的标点符号错误，已经影响到了文章正常的断句和理解。"]
+        },
+        {
+            Score: 0, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）语法错误严重影响到了文章内容的正常理解。"]
+        }], [{
+            Score: 10, Active: false,
+            Items: ["符合以下所有情况：", "（1）格式确认表完整， 资源可靠。", "（2）文内引用完全正确，没有格式错误。", "（3）参考文献页格式完全正确。", "（4）参考文献不仅符合要求了，而且大部分都是权威的或者可靠的文章。"]
+        }, {
+            Score: 8, Active: false,
+            Items: ["符合以下所有情况：", "（1）格式确认表完整，资源可靠。", "（2）参考文献本身基本上符合文章要求。", "（3）文内引用基本正确，几乎没有错误或者有很小的错误。", "（4）参考文献页格式基本正确，几乎没有错误或者有很小的错误。"]
+        },
+        {
+            Score: 6, Active: false,
+            Items: ["符合以下所有情况：", "（1）参考文献有一部分不符合要求。", "（2）文章的文内引用有一半左右存在问题。", "（3）文章的文内引用有一半存在问题。", "（4）文章的排版和字体基本正确"]
+        },
+        {
+            Score: 3, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）添加的参考文献一部分不符合要求。", "（2）文章字体、页边距、行距不对。", "（3）全部的文内引用格式不对。", "（4）全部的或者大部分的参考文献格式有很大的问题。"]
+        },
+        {
+            Score: 0, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）按照要求应该添加参考文献，没有添加参考文献或者添加的参考文献不符合要求。", "(2) 没有文内引用。", "(3) 参考文献格式不对。", "(4）没有参考文献页。"]
+        }], [{
+            Score: 15, Active: false,
+            Items: ["符合以下所有情况：", "（1）单稿的时间效率很高，平均一千字花费的时间从接稿开始在一天以内。", "（2）稿件交稿时间在交稿时间之前，充分考虑了组长的审稿时间。", "（3）该稿件充分考虑并预留出了足够的审稿时间。", "（4）该稿件与编辑写的其他稿件充分的协调。"]
+        }, {
+            Score: 13, Active: false,
+            Items: ["符合以下所有情况：", "（1）单稿的时间效率表现比较好，能够提前完成稿件，平均一千字花费的时间从写作开始能够8小时以内完成。", "（2）编辑在交稿时间上与组长进行较为充分的沟通。", "（3）该稿件充分考虑并预留出了足够的审稿时间。", "（4）该稿件在时间协调上与其他稿件搭配合理。"]
+        },
+        {
+            Score: 9, Active: false,
+            Items: ["符合以下所有情况：", "（1）按时交稿。", "（2）没有拖稿。", "（3）给组长预留出来的审稿时间一般。", "（4）与其他稿件的写作和修改时间一般。"]
+        },
+        {
+            Score: 6, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）虽然没有超时，但是考虑到组长的工作该稿件审核时间很紧缺。", "（2）该稿件虽然没有拖稿，但是到截止时间了，稿件还有很大的修改空间。", "（3）虽然稿件按时交稿了，但是考虑到稿件本身的难度和篇幅，系统预留出的审核和修改稿件时间不充分。", "（4）虽然与其他稿件都是按时交稿，但是组长审核两个稿件时间不充分。"]
+        },
+        {
+            Score: 0, Active: false,
+            Items: ["出现以下任何一种情况的：", "（1）有超时的问题。", "(2) 有拖稿的问题", "(3) 虽然没有超时，但是考虑到组长的工作该稿件没有办法审核。", "(4）没有预留出其他稿件的修改时间。"]
+        }],[
+        {
+            Score: 20,
+            Active: false,
+            Items: [
+                "符合以下所有情况：",
+                "（1）稿件属于writing 39C/39B，哲学3000c/2000C，等类似较难类型",
+                "（2）稿件字数在1800字以上的。"
+            ]
+        },
+        {
+            Score: 17,
+            Active: false,
+            Items: [
+                "符合以下所有情况：",
+                "（1）稿件类型属于writing 39A，相对比较科目复杂的类型。",
+                "（2）稿件字数在1500字以上。"
+            ]
+        },
+        {
+            Score: 13,
+            Active: false,
+            Items: [
+                "符合以下所有情况：",
+                "（1）属于常见稿件类型。",
+                "（2）稿件字数在1000字以上。"
+            ]
+        },
+        {
+            Score: 8,
+            Active: false,
+            Items: [
+                "出现以下任何一种情况的：",
+                "（1）稿件类型非常简单，内容单一。",
+                "（2）字数1000字以下。"
+            ]
+        },
+        {
+            Score: 0,
+            Active: false,
+            Items: [
+                "出现以下任何一种情况的：",
+                "(1) 稿件类型为非常简单的Discussion，reply等。",
+                "(2) 字数500字以下"
+            ]
+        }
+    ]]
+    },
+    created: function () {
+        var _this = this;
+
+        axios.get("/api/user/" + _this.assignment.cs).then(function (response) {
+            _this.cs = response.data;
+        }).catch(function (error) {
+            console.log(error);
+        });
+        axios.get("/api/user/" + _this.assignment.editor).then(function (response) {
+            _this.editor = response.data;
+        }).catch(function (error) {
+            console.log(error);
+            });
+
+        switch (_this.assignment.status)
+        {
+            case "待派单":
+                _this.statusCurrent = 0;
+                break;
+            case "待交稿":
+                _this.statusCurrent = 0;
+                break;
+            case "待审核":
+                _this.statusCurrent = 1;
+                break;
+            case "待修改":
+                _this.statusCurrent = 1;
+                break;
+            case "待发送":
+                _this.statusCurrent = 2;
+                break;
+            case "已完成":
+                _this.statusCurrent = 2;
+                break;
+        }
+
+        this.fetchFinished();
+        this.fetchAttachments();
+        this.fetchWorks();
+        this.fetchFlow();
+        this.fetchNotification();
+    },
+    methods: {
+        redirect: function () {
+            window.location.href = "/home/assignment/" + this.searchText;
+        },
+        fetchFlow: function () {
+            var _this = this;
+            axios.get("/api/flow/" + this.assignment.id).then(function (response) {
+                _this.flows = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        release: function ()
+        {
+            var _this = this;
+            axios.get("/Home/ReleaseUrl/" + _this.assignment.id).then(function (response) {
+                window.open(response.data);
+            }).catch(function (error) {
+                _this.$Message.error('操作失败!' + error);
+            });
+        },
+        handleSubmitForCheck: function () {
+            var _this = this;
+
+            axios.post("/api/assignment/finish", _this.assignment).then(function (response) {
+
+                _this.assignment.status = "待审核";
+                _this.$Message.success('操作成功!');
+
+            }).catch(function (error) {
+                _this.$Message.error('操作失败!' + error.response.data);
+            });
+        },
+        handleParttimeConfirm: function (confirm) {
+            var _this = this;
+
+            this.assignment.isParttimeConfirm = confirm;
+
+            axios.post("/api/assignment/parttimeconfirm", this.assignment).then(function (response) {
+                _this.$Message.success('操作成功!');
+            }).catch(function (error) {
+                _this.$Message.error('操作失败!' + error.response.data);
+            });
+
+        },
+        beginCheck: function () {
+
+            if (this.assignment.reviewScores == null) this.assignment.reviewScores = [];
+            if (this.assignment.reviewScore == null) this.assignment.reviewScore = 0;
+
+            this.checkModel = true;
+            this.checkCurrent = 0;
+        },
+        setReviewScore: function (index, score)
+        {
+            var _this = this;
+
+            _this.assignment.reviewScores[index] = score;
+            _this.assignment.reviewScore = 0;
+
+            for (var i = 0; i < _this.assignment.reviewScores.length; i++)
+            {
+                _this.assignment.reviewScore += _this.assignment.reviewScores[i];
+            }
+        },
+        skipToStep: function (step)
+        {
+            var _this = this;
+
+            if (_this.assignment.reviewScores != null && _this.assignment.reviewScores.length == 5) {
+                _this.checkCurrent = 5;
+            }
+            else
+            {
+                _this.$Message.error('请先选择一个评分再进行下一步！');
+                return false;
+            }
+        },
+        checkStep: function (step) {
+
+            var _this = this;
+
+            if (step == 1 && _this.assignment.reviewScores[_this.checkCurrent] == null) {
+                _this.$Message.error('请先选择一个评分再进行下一步！');
+                return false;
+            }
+
+            _this.checkCurrent += step;
+
+            if (_this.checkCurrent < 0) _this.checkCurrent = 0;
+            if (_this.checkCurrent >= 6) _this.checkCurrent = 6;
+        },
+        handleCheck: function (approve)
+        {
+            var _this = this;
+
+            var flowOperation;
+
+            if (this.assignment.reviews == null) {
+                this.assignment.reviews = [];
+            }
+
+            if (this.review == '') this.review = "无";
+            this.assignment.reviews.push(this.review);
+
+            if (approve) {
+                this.assignment.status = "待发送";
+
+                axios.post("/api/assignment/approve", this.assignment).then(function (response) {
+                    _this.$Message.success('操作成功!');
+                }).catch(function (error) {
+                    _this.$Message.error('操作失败!' + error.response.data);
+                });
+            }
+            else
+            {
+                this.assignment.status = "待修改";
+
+                axios.post("/api/assignment/disapprove", this.assignment).then(function (response) {
+                    _this.$Message.success('操作成功!');
+                }).catch(function (error) {
+                    _this.$Message.error('操作失败!' + error.response.data);
+                });
+            }
+
+            _this.checkModel = false;
+        },
+        handleBeforeUpload: function (file) {
+            var pattern = /[$&,:;=?@@#|'<>^*%!]/;
+
+            if (file.name.match(pattern)) {
+                this.$Message.error("上传文件名不能包含#,@@,$,%,!,<>等特殊符号，请检查后重新上传！")
+                return false;
+            }
+        },
+        handleUploadSuccess: function (success) {
+            this.$Message.success('上传成功!');
+            this.fetchFinished();
+            this.fetchAttachments();
+            this.fetchWorks();
+            this.fetchFlow();
+        },
+        handleUploadError: function (error) {
+            this.$Message.error('文件已存在！请重命名后再次上传！');
+        },
+        alreadyFinished: function (filename) {
+            for (i = 0; i < this.finished.length; i++)
+            {
+                if (this.finished[i].name == filename) return true;
+            }
+
+            return false;
+        },
+        finishWork: function (no, fileName) {
+            var _this = this;
+
+            axios.get("/file/FinishWork/", { params: { no: _this.assignment.no, fileName: fileName } }).then(function (response) {
+                _this.$Message.success('交稿成功!');
+                _this.fetchFinished();
+            }).catch(function (error) {
+                _this.$Message.error('交稿失败!' + error);
+            });
+        },
+        deleteWork: function (no, fileName) {
+            var _this = this;
+
+            axios.get("/file/DeleteWork/", { params: { no: _this.assignment.no, fileName: fileName } }).then(function (response) {
+                _this.$Message.success('取消成功!');
+                _this.fetchFinished();
+            }).catch(function (error) {
+                _this.$Message.error('取消失败!' + error);
+            });
+        },
+        handleToggleEdit: function () {
+            if (this.editMode) {
+                this.handleCancelModify();
+            }
+            else
+            {
+                this.editMode = true;
+            }
+        },
+        handleFeedback: function (status) {
+            var _this = this;
+
+            axios.post("/api/assignment/feedback", this.assignment).then(function (response) {
+                _this.$Message.success('标记成功!');
+            }).catch(function (error) {
+                _this.$Message.error('标记失败!' + error.response.data);
+            });
+        },
+        handleModify: function () {
+            var _this = this;
+
+            axios.post("/api/assignment/update", this.assignment).then(function (response) {
+                _this.$Message.success('修改成功!');
+            }).catch(function (error) {
+                _this.$Message.error('修改失败!' + error.response.data);
+            });
+
+            this.editMode = false;
+        },
+        handleCancelModify: function () {
+            this.editMode = false;
+            this.assignment = originalAssignment;
+        },
+        handleAssign: function () {
+
+            this.assignment.status = "待交稿";
+
+            var _this = this;
+
+            axios.post("/api/assignment/assign", this.assignment).then(function (response) {
+                _this.$Message.success('分配成功!');
+            }).catch(function (error) {
+                _this.$Message.error('分配失败!' + error.response.data);
+            });
+        },
+        download: function (no, type, filename)
+        {
+            window.open("/uploads/" + no + "/" + type + "/" + filename, '_blank');
+        },
+        fetchFinished: function () {
+            var _this = this;
+            axios.get("/file/FetchFiles/", { params: { no: _this.assignment.no, type: 'finished' } }).then(function (response) {
+                console.log(response.data);
+                _this.finished = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        fetchAttachments: function () {
+            var _this = this;
+            axios.get("/file/FetchFiles/", { params: { no: _this.assignment.no, type: 'attachments' } }).then(function (response) {
+                _this.attachments = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        fetchWorks: function () {
+            var _this = this;
+            axios.get("/file/FetchFiles/", { params: { no: _this.assignment.no, type: 'works' } }).then(function (response) {
+                _this.works = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        fetchNotification: function () {
+            var _this = this;
+            axios.get("/api/notification/" + _this.assignment.id).then(function (response) {
+                _this.notifications = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        handleCloseNotification: function (item) {
+            var _this = this;
+            axios.put("/api/notification/", item).then(function (response) {
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        handleClose: function ()
+        {
+            this.assignment.status = "已完成";
+
+            var _this = this;
+
+            axios.post("/api/assignment/close", this.assignment).then(function (response) {
+                _this.$Message.success('操作成功!');
+
+            }).catch(function (error) {
+                _this.$Message.error('操作失败!' + error.response.data);
+            });
+        },
+        handleReopen: function () {
+            this.assignment.status = "待交稿";
+
+            var _this = this;
+
+            axios.post("/api/assignment/open", this.assignment).then(function (response) {
+                _this.$Message.success('操作成功!');
+            }).catch(function (error) {
+                _this.$Message.error('操作失败!' + error.response.data);
+            });
+        },
+        handleDelete: function () {
+
+            var _this = this;
+
+            if (confirm("该操作无法还原，确认删除该单吗？"))
+            {
+                axios.post("/api/assignment/delete", this.assignment).then(function (response) {
+                    window.location = "/home/index";
+                }).catch(function (error) {
+                    window.location = "/home/index";
+                });
+            }
+
+        },
+        handleSMS: function () {
+            var _this = this;
+
+            axios.post("/api/assignment/sms", this.assignment).then(function (response) {
+                _this.$Message.success('操作成功!');
+            }).catch(function (error) {
+                _this.$Message.error('操作失败!' + error.response.data);
+            });
+        },
+        formatTime: function (val) {
+            return moment(val).format('llll');
+        },
+        checkAssignTime: function ()
+        {
+            var _this = this;
+            var title = "派单截止时间";
+
+            if (moment(_this.assignment.assignTime).isBefore(moment(_this.assignment.addTime).add(16, 'hours'))) {
+                return title + "(超时)";
+            }
+            else
+            {
+                return title + "(按时完成)";
+            }
+        },
+        checkFinishTime: function () {
+            var _this = this;
+            var title = "初稿截止时间";
+
+            if (_this.assignment.finishTime == null || _this.assignment.finishTime.length <= 0) return title;
+
+            if (moment(_this.assignment.finishDue).isBefore(moment(_this.assignment.finishTime[0]))) {
+                return title + "(超时)";
+            }
+            else {
+                return title + "(按时完成)";
+            }
+        },
+        checkReviewTime: function () {
+            var _this = this;
+            var title = "初审截止时间";
+
+            if (_this.assignment.reviewTime == null || _this.assignment.reviewTime.length <= 0) return title;
+
+            if (moment(_this.assignment.reviewDue).isBefore(moment(_this.assignment.reviewTime[0]))) {
+                return title + "(超时)";
+            }
+            else {
+                return title + "(按时完成)";
+            }
+        },
+        checkDueTime: function () {
+            var _this = this;
+            var title = "完成截止时间";
+
+            if (_this.assignment.status != "待发送" && _this.assignment.status != "已完成") return title;
+            if (_this.assignment.finishTime == null || _this.assignment.finishTime.length <= 0) return title;
+
+            if (moment(_this.assignment.due).isBefore(moment(_this.assignment.finishTime[_this.assignment.finishTime.length - 1]))) {
+                return title + "(超时)";
+            }
+            else {
+                return title + "(按时完成)";
+            }
+        },
+        fromNow: function (val) {
+            return moment(val).fromNow();
+        }
+        }
+    })
+
+    </script>
+}

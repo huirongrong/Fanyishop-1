@@ -1,0 +1,95 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section styles{
+    <style type="text/css">
+        th {
+            text-align: center;
+        }
+
+        .Success {
+            color: #19be6b;
+        }
+
+        .Warning {
+            color: #ff9900;
+        }
+
+        .Error {
+            font-weight: bold;
+            color: #ed3f14;
+        }
+    </style>
+}
+
+
+<div class="layout-content">
+    <div class="container">
+        <Row>
+            <i-col style="text-align:center;">
+                <i-select v-model="user" placeholder="请选择" style="width:220px;" @@on-change="fetchData">
+                    <i-option v-for="item in users" :value="item.id" :key="item">{{ item.name }}</i-option>
+                </i-select>
+            </i-col>
+        </Row>
+
+        <div class="assignment-title">访问记录</div>
+        <i-table :columns="ips_column" :data="ips"></i-table>
+    </div>
+</div>
+@section scripts{
+    <script>
+
+        moment.locale("zh-cn");
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                user: {},
+                users: [],
+                ips: [],
+                ips_column: [
+                    {
+                        title: '登录地址',
+                        key: 'ipAddress'
+                    },
+                    {
+                        title: '登录时间',
+                        key: 'addTime'
+                    }
+                ]
+            },
+            created: function () {
+
+                var _this = this;
+
+                axios.get("/api/user/").then(function (response) {
+                    _this.users = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+                this.fetchData();
+            },
+            methods: {
+                fetchData: function () {
+                    var _this = this;
+
+                    axios.get("/api/user/GetLoginHistory", {
+                        params: {
+                            uid: _this.user
+                        }
+                    }).then(function (response) {
+                        _this.ips = response.data;
+                        console.log(response.data);
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }
+        })
+
+
+    </script>
+}

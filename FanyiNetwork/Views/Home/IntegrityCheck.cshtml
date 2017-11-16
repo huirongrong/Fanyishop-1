@@ -1,0 +1,107 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section styles{
+    <style type="text/css">
+        table {
+            width: 100%;
+            border: 1px solid #DDD;
+        }
+
+        th {
+            padding: 5px 0;
+            background-color: #F8F8F9;
+            border-bottom: 1px solid #DDD;
+        }
+
+        td {
+            padding: 5px 0;
+            background-color: #FFF;
+            text-align: center;
+        }
+    </style>
+}
+
+<div class="layout-content">
+
+    <div class="container" style="max-width:100%;">
+        <div class="assignment-title">全部单号</div>
+        <i-table :columns="column" :data="assignments"></i-table>
+    </div>
+
+</div>
+@section scripts{
+    <script>
+
+    moment.locale("zh-cn");
+
+    new Vue({
+        el: '#app',
+        data: {
+            column: [
+                {
+                    title: 'no',
+                    key: 'no'
+                },
+                {
+                    title: 'status',
+                    key: 'status'
+                },
+                {
+                    title: 'wordCount/pageCount',
+                    key: 'wordCount',
+                    render: function (row) {
+                        return row.wordCount + "字/" + row.pageCount + "页";
+                    }
+                },
+                {
+                    title: 'addTime',
+                    key: 'addTime'
+                },
+                {
+                    title: 'assignTime',
+                    key: 'assignTime'
+                },
+                {
+                    title: 'due',
+                    key: 'due'
+                },
+                {
+                    title: 'finishTime',
+                    key: 'finishTime'
+                },
+                {
+                    title: 'finishDue',
+                    key: 'finishDue'
+                },
+                {
+                    title: 'reviewTime',
+                    key: 'reviewTime'
+                },
+                {
+                    title: 'reviewDue',
+                    key: 'reviewDue'
+                },
+            ],
+            assignments: []
+        },
+        created: function () {
+            this.fetchData();
+        },
+        methods: {
+            fetchData: function () {
+                var _this = this;
+
+                axios.get("/home/AllAssignment").then(function (response) {
+                    _this.assignments = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    })
+
+
+    </script>
+}

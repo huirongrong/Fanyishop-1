@@ -1,0 +1,144 @@
+﻿@model FanyiNetwork.Models.Assignment
+@{
+    Layout = "_Layout";
+}
+
+@section styles{
+<style>
+    ul.feedbackUl {
+        margin: 50px 0;
+    }
+
+        ul.feedbackUl li {
+            margin: 25px 0;
+        }
+
+    .ad {
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    .money {
+        color: #FC9E01;
+        font-weight: bold;
+    }
+
+    .pays {
+        margin: 0 0 25px 0;
+    }
+
+        .pays img {
+            display: inline-block;
+            margin: 0 10px;
+            width: 260px;
+        }
+</style>
+
+}
+<div class="layout-content">
+    <div class="container" style="text-align:center;">
+
+        <div class="ad" style="margin:50px 0;">
+            亲爱的宝贝，感谢您相信凡易，选择凡易翻译，您的文章已经完成，请在下方下载附件。 <br />
+
+
+            在确认无误后，请将 &nbsp; <span class="money">{{assignment.cost}} {{assignment.currency}}</span> &nbsp; 稿费通过微信,支付宝或PayPal支付。<br /><br />
+
+            <div class="pays">
+                <img src="~/images/wechat.jpg" />
+                <img src="~/images/alipay.jpg" />
+                <a href="http://paypal.me/fanyishop"><img src="~/images/paypal.jpg" /></a>
+            </div>
+
+            Paypal用户需要选择Goods and Service选项，付款后耽误宝贝一分钟的时间发送完成截图至微信客服<br />
+
+            我们近期推出优惠政策：<b>凡是在收到文书后主动给勤劳的编辑打分评价的亲们,下次文章可以享受九折优惠哦！ </b><br />
+        </div>
+
+        <ul class="feedbackUl">
+            <li v-for="file in finished">
+                {{ file.name }} <br /><br />
+                <i-button type="primary" icon="ios-download" size="large" @@click="download(assignment.no, file.name);">下载文件</i-button>
+            </li>
+            <li>
+                <div style="color:#F49F11; font-weight:bold; font-size:14px;">请为我们勤劳的编辑打一个分吧！</div>
+                <Rate show-text v-model="assignment.feedbackRating" :count="10" @@on-change="submit();">
+                    <span style="color: #f5a623">{{ assignment.feedbackRating }} 分</span>
+                </Rate>
+            </li>
+            <li>
+                <div style="color:#888; font-size:14px; margin-bottom:15px;">亲，您的打分及反馈会影响编辑的管理考评！请认真对待噢！</div>
+                <i-input v-model="assignment.feedbackContent" type="textarea" :rows="5" placeholder="请输入..."></i-input><br /><br />
+                <i-button type="primary" long="100%" @@click="submit();">提交反馈</i-button>
+            </li>
+        </ul>
+
+        <div class="ad" style="margin-top:50px;">
+            请您放心，有任何问题我们都会跟进，请与我们保持联系 <br />
+
+            我们会在近期推出更多优惠政策，敬请留意微信留言和朋友圈<br /><br />
+
+            <img src="~/images/@ViewData[" wechat_img"]" width="150" /><br /><br />
+
+            微信客服：@ViewData["wechat"]<br />
+            QQ客服：@ViewData["qq"]<br /><br />
+
+            官方邮件：fanyishop@outlook.com<br />
+            官方网页：fanyishop.com<br />
+            新浪微博：tteakobe@hotmail.com<br /><br />
+
+            再次感谢您选择凡易，我们将是您留学生涯最坚强的后盾<br />
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+
+    moment.locale("zh-cn");
+
+    new Vue({
+        el: '#app',
+        data: {
+            finished: [],
+            assignment: @Html.Raw(Json.Serialize(Model))
+            },
+    created: function () {
+        this.fetchFinished();
+    },
+    methods: {
+        fetchFinished: function () {
+            var _this = this;
+            axios.get("/file/FetchFiles/", { params: { no: _this.assignment.no, type: 'finished' } }).then(function (response) {
+                console.log(response.data);
+                _this.finished = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        download: function (no, filename) {
+            var _this = this;
+            window.open("/uploads/" + no + "/finished/" + filename, '_blank');
+        },
+        submit: function () {
+            var _this = this;
+
+            if (_this.assignment.feedbackRating == 0 && _this.assignment.feedbackContent == '') {
+                _this.$Message.success('您已经打过分啦!');
+            }
+            else {
+                axios.post("/api/assignment/rating", _this.assignment).then(function (response) {
+                    _this.$Message.success('反馈成功!');
+                }).catch(function (error) {
+                    _this.$Message.success('失败!' + error);
+                });
+            }
+        }
+    }
+        })
+
+</script>
+}
+
+

@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section styles{
+    <style type="text/css">
+        .ivu-card {
+            margin-bottom: 16px;
+        }
+
+        .overdue {
+            color: red;
+            font-weight: bold;
+        }
+
+        .cardLink:link, .cardLink:visited, .cardLink:hover, .cardLink:active {
+            color: #000000;
+        }
+    </style>
+}
+
+<i-menu mode="horizontal" active-name="1">
+    <div class="layout-assistant">
+        <Menu-item name="1">全部</Menu-item>
+        <Menu-item name="2">待派单</Menu-item>
+        <Menu-item name="3">待交稿</Menu-item>
+        <Menu-item name="4">待审核</Menu-item>
+        <Menu-item name="5"><a href="/home/archive">已完成</a></Menu-item>
+    </div>
+</i-menu>
+
+<div class="layout-content">
+
+    <div class="container">
+        <i-input v-model="searchQuery" placeholder="请输入需要查询的单号..."></i-input>
+    </div>
+
+    <div class="container">
+        <Row :gutter="16">
+            <i-col span="8" v-for="assignment in assignments">
+                <a class="cardLink" :href="'/home/assignment/' + assignment.id">
+                    <Card :bordered="true">
+                        <p slot="title">{{ assignment.no }} {{ assignment.status }}</p>
+                        <p slot="extra">
+                            <Icon type="ios-clock"></Icon> <span v-bind:class="{ overdue: moment(assignment.due).isBefore(moment())}">{{ fromNow(assignment) }}</span>
+                        </p>
+                        <p>字数要求：{{ assignment.wordCount }}字 <span v-if="assignment.pageCount != 0">/ {{ assignment.pageCount }}页</span></p>
+                        <p>交付时间：{{ formatTime(assignment) }}</p>
+                    </Card>
+                </a>
+            </i-col>
+        </Row>
+    </div>
+
+</div>
+@section scripts{
+    <script>
+
+    moment.locale("zh-cn");
+
+    new Vue({
+        el: '#app',
+        data: {
+            searchQuery: '',
+            assignments: [],
+            overdue: {
+                color: 'inherit'
+            }
+        },
+        created: function () {
+            this.fetchData();
+        },
+        methods: {
+            fetchData: function () {
+
+                var _this = this;
+
+                axios.get("/api/assignment").then(function (response) {
+                    console.log(response.data);
+                    _this.assignments = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            formatTime: function (record) {
+                return moment(record.due).format('llll');
+            },
+            fromNow: function (record) {
+                return moment(record.due).fromNow();
+            },
+            dueStatus: function (record) {
+                if (moment(record.due).isBefore(moment()))
+                {
+                    overdue.color = "red";
+                }
+            },
+            getHref: function (record) {
+                return '/home/assignment' + record.id;
+            }
+        }
+    })
+
+
+    </script>
+}

@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>FanyiNetwork</id>
+    <version>1.0.0</version>
+    <authors>FanyiNetwork</authors>
+    <owners>FanyiNetwork</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp1.1">
+        <dependency id="Microsoft.AspNetCore" version="1.1.1" exclude="Build,Analyzers" />
+        <dependency id="Marten" version="1.5.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Authentication.Cookies" version="1.1.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Debug" version="1.1.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.VisualStudio.Web.CodeGeneration.Design" version="1.1.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.Design" version="1.1.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.NETCore.App" version="1.1.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.VisualStudio.Web.BrowserLink" version="1.1.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="1.1.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.SqlServer.Design" version="1.1.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Mvc" version="1.1.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.ApplicationInsights.AspNetCore" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.StaticFiles" version="1.1.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <contentFiles>
+      <files include="any/netcoreapp1.1/wwwroot/css/fonts/ionicons.eot" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/css/fonts/ionicons.svg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/css/fonts/ionicons.ttf" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/css/fonts/ionicons.woff" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/css/iview.css" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/css/site.min.css" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/favicon.ico" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/alipay.jpg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/cs1.jpg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/cs2.jpg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/cs3.jpg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/doc.svg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/history-clock-button.svg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/jpg.svg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/magnifying-glass.svg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/more.svg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/paypal.jpg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/time.svg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/wechat.jpg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/white-fix.png" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/images/zip.svg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/axios.min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/base64.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/aes/aes-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/aes/aes.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/cbc/cbc-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/cbc/cbc.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto-1.0.zip" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto-md5/crypto-md5.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto-sha1-hmac-pbkdf2-marc4/crypto-sha1-hmac-pbkdf2-marc4.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto-sha1-hmac-pbkdf2-ofb-aes/crypto-sha1-hmac-pbkdf2-ofb-aes.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto-sha1-hmac-pbkdf2-rabbit/crypto-sha1-hmac-pbkdf2-rabbit.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto-sha1-hmac-pbkdf2/crypto-sha1-hmac-pbkdf2.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto-sha1/crypto-sha1.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto-sha256/crypto-sha256.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto/crypto-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/crypto/crypto.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/hmac/hmac-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/hmac/hmac.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/marc4/marc4-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/marc4/marc4.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/md5/md5-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/md5/md5.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/ofb/ofb-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/ofb/ofb.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/pbkdf2/pbkdf2-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/pbkdf2/pbkdf2.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/rabbit/rabbit-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/rabbit/rabbit.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/sha1/sha1-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/sha1/sha1.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/sha256/sha256-min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/crypto1/sha256/sha256.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/iview.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/iview.min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/moment.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/plupload-2.1.2/js/moxie.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/plupload-2.1.2/js/moxie.min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/plupload-2.1.2/js/Moxie.swf" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/plupload-2.1.2/js/Moxie.xap" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/plupload-2.1.2/js/plupload.dev.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/plupload-2.1.2/js/plupload.full.min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/plupload-2.1.2/js/plupload.min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/plupload-2.1.2/license.txt" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/plupload-2.1.2/readme.md" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/site.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/site.min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/upload.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/js/vue.min.js" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/070317002/finished/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/070317002/works/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/070317002/works/扫描-min.jpeg" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/071017006/finished/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/071017006/works/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/071117004/finished/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/071117004/works/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/071217011/finished/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/071217011/works/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/092917001/finished/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/092917001/works/Customer Reception(2).docx" buildAction="Content" />
+      <files include="any/netcoreapp1.1/wwwroot/uploads/102517001/works/102317024补充资料.mp4" buildAction="Content" />
+      <files include="any/netcoreapp1.1/web.config" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Account/Login.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Account/Logout.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Account/Register.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Account/Register2.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Client/Index.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/Add.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/Add2.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/Archive.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/Assignment.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/AssignmentList.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/Index.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/IntegrityCheck.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/IP.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/People.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/Release.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Home/Stats.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Shared/Error.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Views/Shared/_Layout.cshtml" buildAction="Content" />
+      <files include="any/netcoreapp1.1/appsettings.Development.json" buildAction="Content" />
+      <files include="any/netcoreapp1.1/appsettings.json" buildAction="Content" />
+      <files include="any/netcoreapp1.1/Properties/launchSettings.json" buildAction="Content" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="E:\FanyiNetwork\FanyiNetwork\bin\Debug\netcoreapp1.1\FanyiNetwork.runtimeconfig.json" target="lib\netcoreapp1.1\FanyiNetwork.runtimeconfig.json" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\bin\Debug\netcoreapp1.1\FanyiNetwork.dll" target="lib\netcoreapp1.1\FanyiNetwork.dll" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\fonts\ionicons.eot" target="content\wwwroot\css\fonts\ionicons.eot" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\fonts\ionicons.eot" target="contentFiles\any\netcoreapp1.1\wwwroot\css\fonts\ionicons.eot" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\fonts\ionicons.svg" target="content\wwwroot\css\fonts\ionicons.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\fonts\ionicons.svg" target="contentFiles\any\netcoreapp1.1\wwwroot\css\fonts\ionicons.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\fonts\ionicons.ttf" target="content\wwwroot\css\fonts\ionicons.ttf" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\fonts\ionicons.ttf" target="contentFiles\any\netcoreapp1.1\wwwroot\css\fonts\ionicons.ttf" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\fonts\ionicons.woff" target="content\wwwroot\css\fonts\ionicons.woff" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\fonts\ionicons.woff" target="contentFiles\any\netcoreapp1.1\wwwroot\css\fonts\ionicons.woff" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\iview.css" target="content\wwwroot\css\iview.css" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\iview.css" target="contentFiles\any\netcoreapp1.1\wwwroot\css\iview.css" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\site.min.css" target="content\wwwroot\css\site.min.css" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\css\site.min.css" target="contentFiles\any\netcoreapp1.1\wwwroot\css\site.min.css" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\favicon.ico" target="content\wwwroot\favicon.ico" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\favicon.ico" target="contentFiles\any\netcoreapp1.1\wwwroot\favicon.ico" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\alipay.jpg" target="content\wwwroot\images\alipay.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\alipay.jpg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\alipay.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\cs1.jpg" target="content\wwwroot\images\cs1.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\cs1.jpg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\cs1.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\cs2.jpg" target="content\wwwroot\images\cs2.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\cs2.jpg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\cs2.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\cs3.jpg" target="content\wwwroot\images\cs3.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\cs3.jpg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\cs3.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\doc.svg" target="content\wwwroot\images\doc.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\doc.svg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\doc.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\history-clock-button.svg" target="content\wwwroot\images\history-clock-button.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\history-clock-button.svg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\history-clock-button.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\jpg.svg" target="content\wwwroot\images\jpg.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\jpg.svg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\jpg.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\magnifying-glass.svg" target="content\wwwroot\images\magnifying-glass.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\magnifying-glass.svg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\magnifying-glass.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\more.svg" target="content\wwwroot\images\more.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\more.svg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\more.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\paypal.jpg" target="content\wwwroot\images\paypal.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\paypal.jpg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\paypal.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\time.svg" target="content\wwwroot\images\time.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\time.svg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\time.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\wechat.jpg" target="content\wwwroot\images\wechat.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\wechat.jpg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\wechat.jpg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\white-fix.png" target="content\wwwroot\images\white-fix.png" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\white-fix.png" target="contentFiles\any\netcoreapp1.1\wwwroot\images\white-fix.png" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\zip.svg" target="content\wwwroot\images\zip.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\images\zip.svg" target="contentFiles\any\netcoreapp1.1\wwwroot\images\zip.svg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\axios.min.js" target="content\wwwroot\js\axios.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\axios.min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\axios.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\base64.js" target="content\wwwroot\js\base64.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\base64.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\base64.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\aes\aes-min.js" target="content\wwwroot\js\crypto1\aes\aes-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\aes\aes-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\aes\aes-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\aes\aes.js" target="content\wwwroot\js\crypto1\aes\aes.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\aes\aes.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\aes\aes.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\cbc\cbc-min.js" target="content\wwwroot\js\crypto1\cbc\cbc-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\cbc\cbc-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\cbc\cbc-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\cbc\cbc.js" target="content\wwwroot\js\crypto1\cbc\cbc.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\cbc\cbc.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\cbc\cbc.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-1.0.zip" target="content\wwwroot\js\crypto1\crypto-1.0.zip" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-1.0.zip" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto-1.0.zip" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-md5\crypto-md5.js" target="content\wwwroot\js\crypto1\crypto-md5\crypto-md5.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-md5\crypto-md5.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto-md5\crypto-md5.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-marc4\crypto-sha1-hmac-pbkdf2-marc4.js" target="content\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-marc4\crypto-sha1-hmac-pbkdf2-marc4.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-marc4\crypto-sha1-hmac-pbkdf2-marc4.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-marc4\crypto-sha1-hmac-pbkdf2-marc4.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-ofb-aes\crypto-sha1-hmac-pbkdf2-ofb-aes.js" target="content\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-ofb-aes\crypto-sha1-hmac-pbkdf2-ofb-aes.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-ofb-aes\crypto-sha1-hmac-pbkdf2-ofb-aes.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-ofb-aes\crypto-sha1-hmac-pbkdf2-ofb-aes.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-rabbit\crypto-sha1-hmac-pbkdf2-rabbit.js" target="content\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-rabbit\crypto-sha1-hmac-pbkdf2-rabbit.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-rabbit\crypto-sha1-hmac-pbkdf2-rabbit.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2-rabbit\crypto-sha1-hmac-pbkdf2-rabbit.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2\crypto-sha1-hmac-pbkdf2.js" target="content\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2\crypto-sha1-hmac-pbkdf2.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2\crypto-sha1-hmac-pbkdf2.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto-sha1-hmac-pbkdf2\crypto-sha1-hmac-pbkdf2.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1\crypto-sha1.js" target="content\wwwroot\js\crypto1\crypto-sha1\crypto-sha1.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha1\crypto-sha1.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto-sha1\crypto-sha1.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha256\crypto-sha256.js" target="content\wwwroot\js\crypto1\crypto-sha256\crypto-sha256.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto-sha256\crypto-sha256.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto-sha256\crypto-sha256.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto\crypto-min.js" target="content\wwwroot\js\crypto1\crypto\crypto-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto\crypto-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto\crypto-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto\crypto.js" target="content\wwwroot\js\crypto1\crypto\crypto.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\crypto\crypto.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\crypto\crypto.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\hmac\hmac-min.js" target="content\wwwroot\js\crypto1\hmac\hmac-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\hmac\hmac-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\hmac\hmac-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\hmac\hmac.js" target="content\wwwroot\js\crypto1\hmac\hmac.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\hmac\hmac.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\hmac\hmac.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\marc4\marc4-min.js" target="content\wwwroot\js\crypto1\marc4\marc4-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\marc4\marc4-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\marc4\marc4-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\marc4\marc4.js" target="content\wwwroot\js\crypto1\marc4\marc4.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\marc4\marc4.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\marc4\marc4.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\md5\md5-min.js" target="content\wwwroot\js\crypto1\md5\md5-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\md5\md5-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\md5\md5-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\md5\md5.js" target="content\wwwroot\js\crypto1\md5\md5.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\md5\md5.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\md5\md5.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\ofb\ofb-min.js" target="content\wwwroot\js\crypto1\ofb\ofb-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\ofb\ofb-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\ofb\ofb-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\ofb\ofb.js" target="content\wwwroot\js\crypto1\ofb\ofb.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\ofb\ofb.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\ofb\ofb.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\pbkdf2\pbkdf2-min.js" target="content\wwwroot\js\crypto1\pbkdf2\pbkdf2-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\pbkdf2\pbkdf2-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\pbkdf2\pbkdf2-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\pbkdf2\pbkdf2.js" target="content\wwwroot\js\crypto1\pbkdf2\pbkdf2.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\pbkdf2\pbkdf2.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\pbkdf2\pbkdf2.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\rabbit\rabbit-min.js" target="content\wwwroot\js\crypto1\rabbit\rabbit-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\rabbit\rabbit-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\rabbit\rabbit-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\rabbit\rabbit.js" target="content\wwwroot\js\crypto1\rabbit\rabbit.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\rabbit\rabbit.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\rabbit\rabbit.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\sha1\sha1-min.js" target="content\wwwroot\js\crypto1\sha1\sha1-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\sha1\sha1-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\sha1\sha1-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\sha1\sha1.js" target="content\wwwroot\js\crypto1\sha1\sha1.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\sha1\sha1.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\sha1\sha1.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\sha256\sha256-min.js" target="content\wwwroot\js\crypto1\sha256\sha256-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\sha256\sha256-min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\sha256\sha256-min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\sha256\sha256.js" target="content\wwwroot\js\crypto1\sha256\sha256.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\crypto1\sha256\sha256.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\crypto1\sha256\sha256.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\iview.js" target="content\wwwroot\js\iview.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\iview.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\iview.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\iview.min.js" target="content\wwwroot\js\iview.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\iview.min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\iview.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\moment.js" target="content\wwwroot\js\moment.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\moment.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\moment.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\moxie.js" target="content\wwwroot\js\plupload-2.1.2\js\moxie.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\moxie.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\plupload-2.1.2\js\moxie.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\moxie.min.js" target="content\wwwroot\js\plupload-2.1.2\js\moxie.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\moxie.min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\plupload-2.1.2\js\moxie.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\Moxie.swf" target="content\wwwroot\js\plupload-2.1.2\js\Moxie.swf" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\Moxie.swf" target="contentFiles\any\netcoreapp1.1\wwwroot\js\plupload-2.1.2\js\Moxie.swf" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\Moxie.xap" target="content\wwwroot\js\plupload-2.1.2\js\Moxie.xap" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\Moxie.xap" target="contentFiles\any\netcoreapp1.1\wwwroot\js\plupload-2.1.2\js\Moxie.xap" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\plupload.dev.js" target="content\wwwroot\js\plupload-2.1.2\js\plupload.dev.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\plupload.dev.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\plupload-2.1.2\js\plupload.dev.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\plupload.full.min.js" target="content\wwwroot\js\plupload-2.1.2\js\plupload.full.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\plupload.full.min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\plupload-2.1.2\js\plupload.full.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\plupload.min.js" target="content\wwwroot\js\plupload-2.1.2\js\plupload.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\js\plupload.min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\plupload-2.1.2\js\plupload.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\license.txt" target="content\wwwroot\js\plupload-2.1.2\license.txt" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\license.txt" target="contentFiles\any\netcoreapp1.1\wwwroot\js\plupload-2.1.2\license.txt" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\readme.md" target="content\wwwroot\js\plupload-2.1.2\readme.md" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\plupload-2.1.2\readme.md" target="contentFiles\any\netcoreapp1.1\wwwroot\js\plupload-2.1.2\readme.md" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\site.js" target="content\wwwroot\js\site.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\site.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\site.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\site.min.js" target="content\wwwroot\js\site.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\site.min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\site.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\upload.js" target="content\wwwroot\js\upload.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\upload.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\upload.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\vue.min.js" target="content\wwwroot\js\vue.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\js\vue.min.js" target="contentFiles\any\netcoreapp1.1\wwwroot\js\vue.min.js" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\070317002\finished\Customer Reception(2).docx" target="content\wwwroot\uploads\070317002\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\070317002\finished\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\070317002\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\070317002\works\Customer Reception(2).docx" target="content\wwwroot\uploads\070317002\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\070317002\works\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\070317002\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\070317002\works\扫描-min.jpeg" target="content\wwwroot\uploads\070317002\works\扫描-min.jpeg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\070317002\works\扫描-min.jpeg" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\070317002\works\扫描-min.jpeg" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071017006\finished\Customer Reception(2).docx" target="content\wwwroot\uploads\071017006\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071017006\finished\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\071017006\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071017006\works\Customer Reception(2).docx" target="content\wwwroot\uploads\071017006\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071017006\works\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\071017006\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071117004\finished\Customer Reception(2).docx" target="content\wwwroot\uploads\071117004\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071117004\finished\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\071117004\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071117004\works\Customer Reception(2).docx" target="content\wwwroot\uploads\071117004\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071117004\works\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\071117004\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071217011\finished\Customer Reception(2).docx" target="content\wwwroot\uploads\071217011\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071217011\finished\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\071217011\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071217011\works\Customer Reception(2).docx" target="content\wwwroot\uploads\071217011\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\071217011\works\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\071217011\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\092917001\finished\Customer Reception(2).docx" target="content\wwwroot\uploads\092917001\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\092917001\finished\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\092917001\finished\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\092917001\works\Customer Reception(2).docx" target="content\wwwroot\uploads\092917001\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\092917001\works\Customer Reception(2).docx" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\092917001\works\Customer Reception(2).docx" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\102517001\works\102317024补充资料.mp4" target="content\wwwroot\uploads\102517001\works\102317024补充资料.mp4" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\wwwroot\uploads\102517001\works\102317024补充资料.mp4" target="contentFiles\any\netcoreapp1.1\wwwroot\uploads\102517001\works\102317024补充资料.mp4" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\web.config" target="content\web.config" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\web.config" target="contentFiles\any\netcoreapp1.1\web.config" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Account\Login.cshtml" target="content\Views\Account\Login.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Account\Login.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Account\Login.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Account\Logout.cshtml" target="content\Views\Account\Logout.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Account\Logout.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Account\Logout.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Account\Register.cshtml" target="content\Views\Account\Register.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Account\Register.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Account\Register.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Account\Register2.cshtml" target="content\Views\Account\Register2.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Account\Register2.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Account\Register2.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Client\Index.cshtml" target="content\Views\Client\Index.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Client\Index.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Client\Index.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Add.cshtml" target="content\Views\Home\Add.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Add.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\Add.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Add2.cshtml" target="content\Views\Home\Add2.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Add2.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\Add2.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Archive.cshtml" target="content\Views\Home\Archive.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Archive.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\Archive.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Assignment.cshtml" target="content\Views\Home\Assignment.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Assignment.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\Assignment.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\AssignmentList.cshtml" target="content\Views\Home\AssignmentList.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\AssignmentList.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\AssignmentList.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Index.cshtml" target="content\Views\Home\Index.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Index.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\Index.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\IntegrityCheck.cshtml" target="content\Views\Home\IntegrityCheck.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\IntegrityCheck.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\IntegrityCheck.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\IP.cshtml" target="content\Views\Home\IP.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\IP.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\IP.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\People.cshtml" target="content\Views\Home\People.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\People.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\People.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Release.cshtml" target="content\Views\Home\Release.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Release.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\Release.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Stats.cshtml" target="content\Views\Home\Stats.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Home\Stats.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Home\Stats.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Shared\Error.cshtml" target="content\Views\Shared\Error.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Shared\Error.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Shared\Error.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Shared\_Layout.cshtml" target="content\Views\Shared\_Layout.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Views\Shared\_Layout.cshtml" target="contentFiles\any\netcoreapp1.1\Views\Shared\_Layout.cshtml" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\appsettings.Development.json" target="content\appsettings.Development.json" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\appsettings.Development.json" target="contentFiles\any\netcoreapp1.1\appsettings.Development.json" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\appsettings.json" target="content\appsettings.json" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\appsettings.json" target="contentFiles\any\netcoreapp1.1\appsettings.json" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Properties\launchSettings.json" target="content\Properties\launchSettings.json" />
+    <file src="E:\FanyiNetwork\FanyiNetwork\Properties\launchSettings.json" target="contentFiles\any\netcoreapp1.1\Properties\launchSettings.json" />
+  </files>
+</package>

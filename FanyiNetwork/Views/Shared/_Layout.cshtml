@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="description" content="The HTML5 Herald">
+    <title>@ViewBag.Title</title>
+
+    <link href="~/css/site.min.css" rel="stylesheet" />
+    <link href="~/css/iview.css" rel="stylesheet" />
+
+    @RenderSection("styles")
+
+</head>
+<body>
+    <div id="app">
+        <div class="layout">
+            <i-menu mode="horizontal" theme="dark" active-name="@ViewData["active-name"]">
+                <div class="layout-logo">凡易</div>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                        <a href="/Home/Index">
+                            <Menu-item name="1">
+                                <Icon type="android-sunny"></Icon>
+                                总览
+                            </Menu-item>
+                        </a>
+
+                        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value != "兼职编辑部")))
+                        {
+                            <a href="/Home/People">
+                                <Menu-item name="2">
+                                    <Icon type="android-sunny"></Icon>
+                                    人员
+                                </Menu-item>
+                            </a>
+                        }
+
+                        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "客服主管" || x.Value == "客服部" || x.Value == "人事部" || x.Value == "经理办")))
+                        {
+                            <a href="/Home/Add">
+                                <Menu-item name="3">
+                                    <Icon type="plus"></Icon>
+                                    新建单号
+                                </Menu-item>
+                            </a>
+                        }
+                        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "客服主管" || x.Value == "客服部" || x.Value == "人事部" || x.Value == "经理办")))
+                        {
+                            <a href="/Home/Add2">
+                                <Menu-item name="4">
+                                    <Icon type="plus"></Icon>
+                                    新建兼职单号
+                                </Menu-item>
+                            </a>
+                        }
+                        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "主编" || x.Value == "人事部" || x.Value == "经理办")))
+                        {
+                            <a href="/Home/Stats">
+                                <Menu-item name="5">
+                                    <Icon type="stats-bars"></Icon>
+                                    统计
+                                </Menu-item>
+                            </a>
+                        }
+                        @if (User.HasClaim(x => x.Type == System.Security.Claims.ClaimTypes.Role && (x.Value == "客服主管" || x.Value == "客服部" || x.Value == "人事部" || x.Value == "经理办")))
+                        {
+                            <a href="/Client/Index">
+                                <Menu-item name="6">
+                                    <Icon type="ios-briefcase"></Icon>
+                                    客户
+                                </Menu-item>
+                            </a>
+                        }
+
+                    <div class="layout-user">
+
+                        <Dropdown>
+                            <a href="javascript:void(0)" style="color:#FFF;">
+                                @User.Identity.Name
+                                <Icon type="arrow-down-b"></Icon>
+                            </a>
+                            <Dropdown-menu slot="list">
+                                <a href="~/home/assignmentList">
+                                    <Dropdown-item>我的全部单号</Dropdown-item>
+                                </a>
+                                <a href="~/account/logout">
+                                    <Dropdown-item divided>登出</Dropdown-item>
+                                </a>
+                            </Dropdown-menu>
+                        </Dropdown>
+                    </div>
+                }
+                else
+                {
+                    <div class="layout-user">
+                        <a href="~/account/login"><i-button type="primary">登录</i-button></a>
+                        <a href="~/account/register"><i-button type="text">注册</i-button></a>
+                    </div>
+                }
+                
+            </i-menu>
+            @RenderBody()
+            <div class="layout-copy">
+                2011-2016 &copy; TalkingData
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/vue.min.js"></script>
+    <script src="~/js/iview.js"></script>
+    <script src="~/js/axios.min.js"></script>
+    <script src="~/js/moment.js"></script>
+
+    @RenderSection("scripts")
+</body>
+</html>
