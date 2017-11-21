@@ -40,6 +40,7 @@ namespace FanyiNetwork.Models
         public DateTime birthday { get; set; }
         public string memo { get; set; }
         public DateTime addTime { get; set; }
+        public string age { get; set; }
     }
 
     public class Assignment : BaseModel

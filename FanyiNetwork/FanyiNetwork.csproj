@@ -17,6 +17,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Client\eee.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\css\fonts\ionicons.eot" />
     <Content Include="wwwroot\css\fonts\ionicons.svg" />
     <Content Include="wwwroot\css\fonts\ionicons.ttf" />

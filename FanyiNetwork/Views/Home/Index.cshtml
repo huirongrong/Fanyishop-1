@@ -272,7 +272,9 @@
                     var _this = this;
 
                     if (this.status != '') {
+                        console.log(status);
                         list = list.filter(function (item) {
+                            console.log(status);
                             return item.assignmentDetails.status == _this.status;
                         });
                     }
@@ -312,6 +314,7 @@
                         return "无";
                     }
                 }
+
             }
         })
 
